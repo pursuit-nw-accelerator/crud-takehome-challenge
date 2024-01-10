@@ -25,6 +25,7 @@ const createApplication = async (application) => {
   jobApplications.push({
     id: ++lastId,
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     ...application,
   });
   return jobApplications[jobApplications.length - 1];
@@ -35,7 +36,7 @@ const updateApplication = async (id, application) => {
     (currApplication) => currApplication.id === id
   );
   jobApplications[idx] = {
-    id,
+    ...jobApplications[idx],
     updatedAt: new Date().toISOString(),
     ...application,
   };

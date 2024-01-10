@@ -32,6 +32,7 @@ As a client, I should be able to:
 ## <a id="other-requirements"></a> Other requirements
 1. Your API should not cause CORS errors in the Google Chrome web browser.
 1. All routes should return JSON with the correct status code.
+1. Route names and methods follow proper REST conventions (`POST /applications`, not `POST /make_new_application`)
 1. For a successful response, return JSON in this format: `{ "data": <data to be returned> }`
 1. When there is an error, return JSON in this format: `{ "error": <the actual error message> }`
 1. Your application should be organized into a controller layer, a query layer, and middleware.
@@ -42,7 +43,7 @@ As a client, I should be able to:
 1. When creating or updating an application, validate the client's input. Return the correct status code if it's not valid.
     - There must be a company and status
     - The status must be one of the statuses listed in `constants.js`
-    - The url field is optional
+    - The url field is optional, but should have a `null` value if it isn't present.
     - No other fields should be present (including `id`, `createdAt`, `updatedAt`, `admin`, etc.)
 1. Replace this README with a new README file. It must contain the following:
     - A title
@@ -64,6 +65,8 @@ Instead of using a real database, your API will read from a JSON object (see `/d
 You can see in this file that a job application has several properties: `id` (set automatically by the database), `company`, `url` (optional), and `status`. `createdAt` and `updatedAt` are automatically added when a job application is created or updated.
 
 In the file `/queries/jobApplicationsQueries.js` there are already some methods that can create, read, update, or delete the applications in the JSON file. You should understand how these methods work, what they return, and how you'll use them in your code. You should not need to modify them at all.
+
+Notice that the query methods are `async` functions, just like they would have to be if they queried an actual database. **Do not** change them to non-async functions.
 
 
 

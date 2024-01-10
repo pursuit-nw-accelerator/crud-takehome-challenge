@@ -2,7 +2,8 @@ const express = require('express');
 
 const app = express();
 
-// TODO: Add middleware
+// TODO: Add application-wide middleware
+app.use(cors());
 
 // TODO: Add controller(s)
 
