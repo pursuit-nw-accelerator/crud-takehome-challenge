@@ -22,7 +22,11 @@ const getApplicationById = async (id) => {
 };
 
 const createApplication = async (application) => {
-  jobApplications.push({ id: ++lastId, ...application });
+  jobApplications.push({
+    id: ++lastId,
+    createdAt: new Date().toISOString(),
+    ...application,
+  });
   return jobApplications[jobApplications.length - 1];
 };
 
@@ -30,7 +34,11 @@ const updateApplication = async (id, application) => {
   const idx = jobApplications.findIndex(
     (currApplication) => currApplication.id === id
   );
-  jobApplications[idx] = { id, ...application };
+  jobApplications[idx] = {
+    id,
+    updatedAt: new Date().toISOString(),
+    ...application,
+  };
   return jobApplications[idx];
 };
 
