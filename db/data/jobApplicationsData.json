@@ -1,0 +1,45 @@
+{
+    "jobApplications":
+    [
+        {
+            "id": 1,
+            "company": "Google",
+            "url": "https://cooljobs.com/google-swe",
+            "createdAt": "2024-01-01T00:00:00.000Z",
+            "status": "APPLIED",
+            "updatedAt": "2024-01-10T00:00:00.000Z"
+        },
+        {
+            "id": 2,
+            "company": "CodeTrack",
+            "url": null,
+            "createdAt": "2024-01-03T00:00:00.000Z",
+            "status": "CREATED",
+            "updatedAt": "2024-01-03T00:00:00.000Z"
+        },
+        {
+            "id": 3,
+            "company": "DataDog",
+            "url": "https://cooljobs.com/datadog-apprenticeship",
+            "createdAt": "2024-01-07T00:00:00.000Z",
+            "status": "PHONE_SCREEN",
+            "updatedAt": "2024-01-15T00:00:00.000Z"
+        },
+        {
+            "id": 4,
+            "company": "Telsa",
+            "url": "https://cooljobs.com/tesla-internship",
+            "createdAt": "2024-01-03T00:00:00.000Z",
+            "status": "ON_SITE",
+            "updatedAt": "2024-01-17T00:00:00.000Z"
+        },
+        {
+            "id": 5,
+            "company": "OpenAI",
+            "url": "https://cooljobs.com/AI-swe",
+            "createdAt": "2024-01-11T00:00:00.000Z",
+            "status": "REJECTED",
+            "updatedAt": "2024-01-12T00:00:00.000Z"
+        }
+    ]
+}
