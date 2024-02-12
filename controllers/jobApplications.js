@@ -16,6 +16,14 @@ jobApplications.get('/', async (req, res) => {
   });
 });
 
+jobApplications.get('/:id', async (req, res) => {
+  //get one application by id
+  await req.generalProcedure(req, res, async () => {
+    const ret = (await getAllApplications()).filter(el => el.deleted !== 1);
+    res.json({ data: ret });
+  });
+});
+
 jobApplications.post('/', newJobApplication, async (req, res) => {
   //create application
   await req.generalProcedure(req, res, async () => {
