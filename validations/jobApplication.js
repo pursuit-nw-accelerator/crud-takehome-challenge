@@ -2,7 +2,7 @@ const constants = require('../constants');
 ///////////////////////////////////////////////
 const newJobApplication = (req, res, next) => {
   const { company, status, url } = req.body;
-  if (applicationStatuses[status] === undefined) {
+  if (status === undefined || constants.applicationStatuses[status] === undefined) {
     res.status(400).json({ "error": "status not vaild." });
     return;
   }

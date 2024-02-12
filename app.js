@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   }
 });
 // TODO: Add controller(s)
-
+app.use("/v1/jobApplications", require('./controllers/jobApplications'));
 // TODO: Implement health check route
 app.get('/', (req, res) => {
   res.send("Server is running.");
