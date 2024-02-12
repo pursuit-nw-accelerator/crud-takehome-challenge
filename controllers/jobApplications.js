@@ -5,7 +5,7 @@ const { getAllApplications,
   createApplication,
   updateApplication,
   deleteApplication, } = require('../queries/jobApplicationsQueries');
-const { newJobApplication } = require('../validations/jobApplication');
+const { newJobApplication, queryId } = require('../validations/jobApplication');
 /////////////////////////////////////////////////////////
 
 jobApplications.get('/', async (req, res) => {
@@ -16,7 +16,7 @@ jobApplications.get('/', async (req, res) => {
   });
 });
 
-jobApplications.get('/:id', async (req, res) => {
+jobApplications.get('/:id', queryId, async (req, res) => {
   //get one application by id
   await req.generalProcedure(req, res, async () => {
     const ret = (await getAllApplications()).filter(el => el.deleted !== 1);

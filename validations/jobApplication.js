@@ -25,7 +25,10 @@ const queryId = (req, res, next) => {
   let { id } = req.params;
   if (!Number.isInteger(id)) {
     res.status(400).json(returnError("id not vaild."));
+    return;
   }
+  req.vaildId = id;
+  next();
 }
 ///////////////////////////////////////////////
 module.exports = { newJobApplication, queryId }
