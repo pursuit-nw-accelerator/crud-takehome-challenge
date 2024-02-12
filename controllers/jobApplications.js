@@ -5,6 +5,7 @@ const { getAllApplications,
   createApplication,
   updateApplication,
   deleteApplication, } = require('../queries/jobApplicationsQueries');
+const { newJobApplication } = require('../validations/jobApplication');
 /////////////////////////////////////////////////////////
 
 
@@ -14,9 +15,10 @@ jobApplications.get('/', async (req, res) => {
   });
 });
 
-jobApplications.post('/', async (req, res) => {
+jobApplications.post('/', newJobApplication, async (req, res) => {
   await req.generalProcedure(req, res, async () => {
-    await createApplication();
+    console.log(req.vaildBody);
+    // await createApplication();
   });
 });
 
