@@ -1,10 +1,6 @@
 # CRUD back end takehome challenge
 
----
-
 # Antonio Shivers
-
----
 
 ## How to run the server locally
 
