@@ -10,7 +10,7 @@ const {
   deleteApplication,
 } = require("../queries/jobApplicationsQueries");
 
-const { validateId, validateData } = require("../middleware");
+const { validateId, validateData, validatePutData } = require("../middleware");
 
 jobAppController.get("/", async (request, response) => {
   try {
@@ -40,5 +40,23 @@ jobAppController.post("/", validateData, async (request, response) => {
     response.status(500).json({ error: "Create resource error" });
   }
 });
+
+jobAppController.put(
+  "/:id",
+  validateId,
+  validatePutData,
+  async (request, response) => {
+    const { id } = request.params;
+    try {
+      const appData = request.body;
+      const updatedJob = await updateApplication(+id, appData);
+      response.status(200).json({ data: updatedJob });
+    } catch (error) {
+      response.status(500).json({
+        error: "rettempt with correct application id and correct fields",
+      });
+    }
+  },
+);
 
 module.exports = jobAppController;
