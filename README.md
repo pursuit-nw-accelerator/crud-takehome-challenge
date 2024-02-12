@@ -8,11 +8,29 @@
 
    ![green code button](image.png)
 
-2. Open a terminal of your choosing and type: **git clone >the url you copied<**
+2. Open a terminal of your choosing and type:
 
-3. cd into the newly cloned repo and type the command: **npm install**
+   ```bash
+   git clone <the url you copied>
+   ```
 
-4. Type the command: **npm start**
+   ![git clone command](image-1.png)
+
+3. cd into the newly cloned repo and type the command:
+
+   ```bash
+   npm install
+   ```
+
+   ![cd into directory](image-2.png)
+
+4. Type the command:
+
+   ```bash
+   npm start
+   ```
+
+   ![npm start command](image-3.png)
 
 5. CONGRADULATIONS! You're now running the server locally.
 
