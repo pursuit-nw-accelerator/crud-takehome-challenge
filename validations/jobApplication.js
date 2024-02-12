@@ -23,11 +23,11 @@ const newJobApplication = (req, res, next) => {
 
 const queryId = (req, res, next) => {
   let { id } = req.params;
-  if (!Number.isInteger(id)) {
+  if (!Number.isInteger(Number(id))) {
     res.status(400).json(returnError("id not vaild."));
     return;
   }
-  req.vaildId = id;
+  req.vaildId = Number(id);
   next();
 }
 ///////////////////////////////////////////////

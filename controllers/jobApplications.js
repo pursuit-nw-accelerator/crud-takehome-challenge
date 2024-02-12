@@ -11,7 +11,10 @@ const { newJobApplication, queryId } = require('../validations/jobApplication');
 jobApplications.get('/', async (req, res) => {
   //get all applications
   await req.generalProcedure(req, res, async () => {
-    const ret = (await getAllApplications()).filter(el => el.deleted !== 1);
+
+    let ret = await getAllApplications();
+    ret.filter(el => el.deleted !== 1);
+    if (ret.length === 0) throw new Error("no application found.", { cause: 404 });
     res.json({ data: ret });
   });
 });
@@ -19,7 +22,8 @@ jobApplications.get('/', async (req, res) => {
 jobApplications.get('/:id', queryId, async (req, res) => {
   //get one application by id
   await req.generalProcedure(req, res, async () => {
-    const ret = (await getAllApplications()).filter(el => el.deleted !== 1);
+    let ret = await getApplicationById(req.vaildId);
+    if (!ret || ret.deleted === 1) throw new Error("application id not found.", { cause: 404 });
     res.json({ data: ret });
   });
 });
