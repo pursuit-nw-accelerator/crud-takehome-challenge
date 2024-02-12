@@ -17,8 +17,11 @@ jobApplications.get('/', async (req, res) => {
 
 jobApplications.post('/', newJobApplication, async (req, res) => {
   await req.generalProcedure(req, res, async () => {
-    console.log(req.vaildBody);
-    // await createApplication();
+    const ret = await createApplication(req.vaildBody);
+
+    if (!ret) throw new Error("Db query return empty.");
+
+    res.json({ data: ret });
   });
 });
 

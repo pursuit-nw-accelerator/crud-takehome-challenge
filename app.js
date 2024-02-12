@@ -16,7 +16,7 @@ app.use((req, res, next) => {
       } catch (error) {
         console.error(error);
         const code = error.cause || 500;
-        res.status(code).json({ error: (error || 500) });
+        res.status(code).json({ error: (error.message || 500) });
         if (error_callback) error_callback();
       }
     };
