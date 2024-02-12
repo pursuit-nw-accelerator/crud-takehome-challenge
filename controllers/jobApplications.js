@@ -10,8 +10,9 @@ const { newJobApplication } = require('../validations/jobApplication');
 
 
 jobApplications.get('/', async (req, res) => {
-  await req.generalProcedure(req, res, () => {
-
+  await req.generalProcedure(req, res, async () => {
+    const ret = await getAllApplications();
+    res.json({ data: ret });
   });
 });
 
