@@ -6,15 +6,6 @@ function isValidDateString(str) {
   return date.toString() !== "Invalid Date" && !isNaN(date.getTime());
 }
 
-const validateId = (req, res, next) => {
-  const { id } = req.params;
-  if (Number.isInteger(+id) && +id > -1) {
-    next();
-  } else {
-    res.status(400).json({ error: "Invalid id requires integer" });
-  }
-};
-
 function isValidStatus(str) {
   if (typeof str != "string") {
     return false;
@@ -29,6 +20,15 @@ function isValidUrl(url) {
   const urlPattern = /^(https?:\/\/)?([\w-]+\.)*[\w-]+(:\d+)?(\/\S*)?$/i;
   return urlPattern.test(url);
 }
+
+const validateId = (req, res, next) => {
+  const { id } = req.params;
+  if (Number.isInteger(+id) && +id > -1) {
+    next();
+  } else {
+    res.status(400).json({ error: "Invalid id requires integer" });
+  }
+};
 
 const validateData = (req, res, next) => {
   if (!req.body.hasOwnProperty("url")) {

@@ -59,4 +59,14 @@ jobAppController.put(
   },
 );
 
+jobAppController.delete("/:id", validateId, async (request, response) => {
+  const { id } = request.params;
+  try {
+    const deletedApp = await deleteApplication(+id);
+    response.status(200).json({ data: deletedApp });
+  } catch (error) {
+    response.status(500).json({ error: "reattempt with correct id" });
+  }
+});
+
 module.exports = jobAppController;
