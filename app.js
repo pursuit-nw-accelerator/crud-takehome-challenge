@@ -29,5 +29,11 @@ app.use((req, res, next) => {
 // TODO: Add controller(s)
 
 // TODO: Implement health check route
-
+app.get('/', (req, res) => {
+  res.send("Server is running.");
+});
+app.get('*', (req, res) => {
+  res.status(404).send('Page not found.');
+});
+////////////////////////////////////////////////////
 module.exports = app;
