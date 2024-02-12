@@ -9,10 +9,9 @@ const app = express();
 
 // TODO: Add application-wide middleware
 app.use(cors());
-
-// TODO: Add controller(s)
 app.use(express.json());
 
+// TODO: Add controller(s)
 app.use("/applications", jobAppController);
 
 // TODO: Implement health check route
