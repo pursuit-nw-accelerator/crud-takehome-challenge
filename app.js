@@ -16,11 +16,11 @@ app.use("/applications", jobAppController);
 
 // TODO: Implement health check route
 app.get("/", (req, res) => {
-  res.status(200).send("Server is up and running");
+  res.status(200).json({ data: "Server is up and running" });
 });
 
 app.get("*", (req, res) => {
-  res.status(404).send("Not Found");
+  res.status(404).json({ error: "Not Found" });
 });
 
 module.exports = app;
