@@ -1,5 +1,6 @@
 const temp = ["company", "status", "url"];
 const applicationStatuses = require("./constants");
+
 const validateId = (req, res, next) => {
   const { id } = req.params;
   if (Number.isInteger(+id) && +id > -1) {
@@ -9,6 +10,54 @@ const validateId = (req, res, next) => {
   }
 };
 
+function isValidStatus(str) {
+  if (typeof str != "string") {
+    return false;
+  }
+  if (!Object.values(applicationStatuses).includes(str)) {
+    return false;
+  }
+  return true;
+}
+
+function isValidUrl(url) {
+  const urlPattern = /^(https?:\/\/)?([\w-]+\.)*[\w-]+(:\d+)?(\/\S*)?$/i;
+  return urlPattern.test(url);
+}
+
+const validateData = (req, res, next) => {
+  if (!req.body.hasOwnProperty("url")) {
+    req.body.url = "null";
+  }
+  let keys = Object.keys(req.body);
+  let values = Object.values(req.body);
+
+  keys.sort();
+  const checkStatus =
+    req.body.hasOwnProperty("status") && isValidStatus(req.body.status);
+  let checkUrl = isValidUrl(req.body?.url);
+  if (!req.body.hasOwnProperty("url") || req.body?.url === null)
+    checkUrl = true;
+  if (!checkStatus || !checkUrl) {
+    res.status(400).json({
+      error:
+        `Invalid ${!checkStatus ? "status" : ""} ${!checkUrl ? "url string" : ""}`.trim(),
+    });
+  } else {
+    const bool =
+      JSON.stringify(keys) === JSON.stringify(temp) &&
+      values.every((value) => typeof value === "string");
+    if (!bool) {
+      res.status(400).json({
+        error: "new data requires company status and url to be a string",
+      });
+    } else {
+      next();
+    }
+  }
+};
+
 module.exports = {
   validateId,
+  validateData,
 };

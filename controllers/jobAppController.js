@@ -10,7 +10,7 @@ const {
   deleteApplication,
 } = require("../queries/jobApplicationsQueries");
 
-const { validateId } = require("../middleware");
+const { validateId, validateData } = require("../middleware");
 
 jobAppController.get("/", async (request, response) => {
   try {
@@ -28,6 +28,16 @@ jobAppController.get("/:id", validateId, async (request, response) => {
     response.status(200).json({ data: job || `id of ${id} not found` });
   } catch (error) {
     response.status(500).json({ error: "json server error" });
+  }
+});
+
+jobAppController.post("/", validateData, async (request, response) => {
+  const jobapp = request.body;
+  try {
+    const createdApp = await createApplication(jobapp);
+    response.status(201).json({ data: createdApp });
+  } catch (error) {
+    response.status(500).json({ error: "Create resource error" });
   }
 });
 
