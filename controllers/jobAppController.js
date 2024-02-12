@@ -58,6 +58,7 @@ jobApp.post("/", validateFields, async (req, res) => {
     };
 
     const statusValues = Object.values(applicationStatuses);
+
     const correctStatus = statusValues.some(
       (status) => appData.status.toLowerCase() === status.toLowerCase()
     );
@@ -94,13 +95,15 @@ jobApp.put("/:id", validateFields, async (req, res) => {
 
     const statusValues = Object.values(applicationStatuses);
 
-    for (const status of statusValues) {
-      if (updatedAppData.status !== status) {
-        return res.status(400).json({
-          error:
-            "Please input one of the correct statuses: APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
-        });
-      }
+    const correctStatus = statusValues.some(
+      (status) => appData.status.toLowerCase() === status.toLowerCase()
+    );
+
+    if (!correctStatus) {
+      return res.status(400).json({
+        error:
+          "Please input one of the correct statuses: CREATED, APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
+      });
     }
 
     const updateApp = await updateApplication(escapedId, updatedAppData);
