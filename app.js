@@ -11,10 +11,10 @@ app.use(cors());
 
 // TODO: Add controller(s)
 app.get('/applications', controllers.getJobApplications)
-app.get('/applications:id', controllers.getJobApplicationById)
+app.get('/applications/:id', controllers.getJobApplicationById)
 app.post('/applications', controllers.createJobApplication)
-app.put('/applications:id', controllers.updateJobApplication)
-app.delete('/applications:id', controllers.deleteJobApplication)
+app.put('/applications/:id', controllers.updateJobApplication)
+app.delete('/applications/:id', controllers.deleteJobApplication)
 
 // TODO: Implement health check route
 app.get('/health', (req, res) => {
