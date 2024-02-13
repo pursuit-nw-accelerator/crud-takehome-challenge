@@ -22,15 +22,18 @@ jobApplications.get('/', async (req, res) => {
 jobApplications.get('/:id', queryId, async (req, res) => {
   //get one application by id
   await req.generalProcedure(req, res, async () => {
-    let ret = await getApplicationById(req.vaildId);
-    if (!ret || ret.deleted === 1) throw new Error("application id not found.", { cause: 404 });
-    res.json({ data: ret });
+
+    const applicationExist = await getApplicationById(req.vaildId);
+    if (applicationExist === undefined) throw new Error(`application id: ${req.vaildId} not found.`, { cause: 404 });
+
+    res.json({ data: applicationExist });
   });
 });
 
 jobApplications.post('/', newJobApplication, async (req, res) => {
   //create application
   await req.generalProcedure(req, res, async () => {
+
     const ret = await createApplication(req.vaildBody);
 
     if (!ret) throw new Error("Db query return empty.");
@@ -39,5 +42,31 @@ jobApplications.post('/', newJobApplication, async (req, res) => {
   });
 });
 
+jobApplications.patch('/:id', queryId, newJobApplication, async (req, res) => {
+  //edit application
+  await req.generalProcedure(req, res, async () => {
+
+    const applicationExist = await getApplicationById(req.vaildId);
+    if (applicationExist === undefined) throw new Error(`application id: ${req.vaildId} not found.`, { cause: 404 });
+
+    const ret = await updateApplication(req.vaildId, req.vaildBody);
+    if (!ret) throw new Error("Db query return empty.");
+
+    res.json({ data: ret });
+  });
+});
+
+jobApplications.delete('/:id', queryId, async (req, res) => {
+  //delete application
+  await req.generalProcedure(req, res, async () => {
+
+    const applicationExist = await getApplicationById(req.vaildId);
+    if (applicationExist === undefined) throw new Error(`application id: ${req.vaildId} not found.`, { cause: 404 });
+
+    const ret = await deleteApplication(req.vaildId);
+
+    res.json({ data: ret });
+  });
+});
 /////////////////////////////////////////////////////////
 module.exports = jobApplications;
