@@ -13,7 +13,6 @@ jobApplications.get('/', async (req, res) => {
   await req.generalProcedure(req, res, async () => {
 
     let ret = await getAllApplications();
-    ret.filter(el => el.deleted !== 1);
     if (ret.length === 0) throw new Error("no application found.", { cause: 404 });
     res.json({ data: ret });
   });
