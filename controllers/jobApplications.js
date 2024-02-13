@@ -13,7 +13,7 @@ jobApplications.get('/', async (req, res) => {
   await req.generalProcedure(req, res, async () => {
 
     let ret = await getAllApplications();
-    if (ret.length === 0) throw new Error("no application found.", { cause: 404 });
+    if (!Array.isArray(ret)) throw new Error("no application found.", { cause: 404 });
     res.json({ data: ret });
   });
 });
