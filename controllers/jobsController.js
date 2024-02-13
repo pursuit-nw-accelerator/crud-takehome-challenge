@@ -8,7 +8,7 @@ const getJobApplications = async (req,res) => {
     try {
         const applications = await jobApplicationsQueries.getAllApplications(); 
         //if successful
-        res.status(200).json(applications)
+        res.status(200).json({ data: applications})
     } catch (error) {
         //if error
         console.log('Error fecthing applications:', error)
@@ -26,7 +26,7 @@ const getJobApplicationById = async (req,res) => {
         if(!application){
             return res.status(404).json({error: 'Applications not found'})
         } 
-        res.status(200).json(application)
+        res.status(200).json({ data: application})
         //catch other errors
     } catch (error) {
         console.log('Error getting ID:', error)
@@ -40,10 +40,10 @@ const createJobApplication = async (req,res) => {
     try {
         const newApplication = await jobApplicationsQueries.createApplication(applicationData)
         //if successfully created
-        res.status(201).json(newApplication)
+        res.status(201).json({ data: newApplication})
     } catch (error) {
-        console.log('Error created app', error)
-        res.status(500).json('Internal Server Error')
+        console.log('Error creating app', error)
+        res.status(500).json({ error: 'Internal Server Error'})
     }
 };
 
@@ -55,10 +55,10 @@ const updateJobApplication = async (req,res) => {
         if(!updatedApp) {
             res.status(404).json({error: 'Could not find App'})
         }
-        res.status(200).json(updatedApp)
+        res.status(200).json({ data: updatedApp})
     } catch ( error ) {
         console.log('Error updating ID', error)
-    res.status(500).json('Internal Server Error')
+    res.status(500).json({ error: 'Internal Server Error'})
     }
 };
 
@@ -70,10 +70,10 @@ const deleteJobApplication = async (req, res) => {
         if(!deleteApp) {
             res.status(404).json('Could not find App')
         } 
-        res.status(200).json(deleteApp)
+        res.status(200).json({ data: deleteApp})
     } catch (error) {
         console.log('Error deleting app:', error)
-        res.status(500).json('Internal Server Error')
+        res.status(500).json({ error: 'Internal Server Error'})
     }
 };
 
