@@ -17,7 +17,7 @@ jobAppController.get("/", async (request, response) => {
     const jobs = await getAllApplications();
     response.status(200).json({ data: jobs });
   } catch (error) {
-    response.status(500).json({ error: "json server down" });
+    response.status(500).send("Internal Server Error");
   }
 });
 
@@ -25,9 +25,11 @@ jobAppController.get("/:id", validateId, async (request, response) => {
   const { id } = request.params;
   try {
     const job = await getApplicationById(+id);
-    response.status(200).json({ data: job || `id of ${id} not found` });
+    response
+      .status(job ? 200 : 404)
+      .json({ data: job || `No application found for id ${id}` });
   } catch (error) {
-    response.status(500).json({ error: "json server error" });
+    response.status(500).send("Internal Server Error");
   }
 });
 
@@ -37,7 +39,7 @@ jobAppController.post("/", validateData, async (request, response) => {
     const createdApp = await createApplication(jobapp);
     response.status(201).json({ data: createdApp });
   } catch (error) {
-    response.status(500).json({ error: "Create resource error" });
+    response.status(500).send("Internal Server Error");
   }
 });
 
@@ -52,9 +54,7 @@ jobAppController.put(
       const updatedJob = await updateApplication(+id, appData);
       response.status(200).json({ data: updatedJob });
     } catch (error) {
-      response.status(500).json({
-        error: "rettempt with correct application id and correct fields",
-      });
+      response.status(500).send("Internal Server Error");
     }
   },
 );
@@ -63,9 +63,11 @@ jobAppController.delete("/:id", validateId, async (request, response) => {
   const { id } = request.params;
   try {
     const deletedApp = await deleteApplication(+id);
-    response.status(200).json({ data: deletedApp });
+    response
+      .status(deletedApp ? 200 : 404)
+      .json({ data: deletedApp || `No application found for id ${id}` });
   } catch (error) {
-    response.status(500).json({ error: "reattempt with correct id" });
+    response.status(500).send("Internal Server Error");
   }
 });
 
