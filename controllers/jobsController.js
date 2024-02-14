@@ -7,9 +7,13 @@ const {
     updateApplication,
     deleteApplication,
 } = require("../queries/jobApplicationsQueries");
-
+const {
+    validateId,
+    validateJob
+} = require("../validations/checkJobs")
 const jobsController = Router();
 
+//Get All job applications
 jobsController.get('/', async(req, res) => {
     try {
         const jobs = await getAllApplications()
@@ -18,15 +22,11 @@ jobsController.get('/', async(req, res) => {
         res.status(500).json({ error: err.message });
     }
 })
-
-jobsController.get('/:id', async(req, res) => {
+//Get a job application by id
+jobsController.get('/:id', validateId, async(req, res) => {
     try {
         const { id } = req.params
         //Make a validation route for below 
-        if (!Number.isInteger(Number(id))) {
-            // the id is not valid
-            return res.status(400).json({ error: `Invalid id: ${id}` });
-        }
         const job = await getApplicationById(Number(id))
         if (job) {
             res
@@ -38,6 +38,31 @@ jobsController.get('/:id', async(req, res) => {
           }
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+})
+//Update a job application
+jobsController.post('/', async(req, res) => {
+    try {
+        const job = await createApplication(req.body)
+        res.status(200).json({ data: job });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+})
+//Create a job application by id
+jobsController.put('/:id', validateId, (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+})
+//Delete a job application by id
+jobsController.delete('/:id', validateId, (req, res) => {
+    try {
+        
+    } catch (error) {
+        
     }
 })
 
