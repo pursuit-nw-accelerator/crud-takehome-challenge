@@ -18,14 +18,6 @@ const {
 
 const app = require("../app");
 
-// const application_fields = [
-//     "company",
-//     "url",
-//     "createdAt",
-//     "status",
-//     "updatedAt"
-// ]
-
 //GET ALL APPLICATIONS
 jobApplications.get("/", async (req, res) => {
     try {
@@ -48,7 +40,7 @@ jobApplications.get("/:id",validId,idExist,  async ( req, res ) => {
 })
 
 // POST
-jobApplications.post("/", async (req, res) => {
+jobApplications.post("/", validInputFields, async (req, res) => {
     try {
         const application = req.body;
         const newApplication = await createApplication(application)
@@ -59,7 +51,7 @@ jobApplications.post("/", async (req, res) => {
 })
 
 // PUT
-jobApplications.put("/:id", validInputFields, async (req, res) => {
+jobApplications.put("/:id",validInputFields, async (req, res) => {
     try {
         const { id } = req.params;
         const application = req.body;
