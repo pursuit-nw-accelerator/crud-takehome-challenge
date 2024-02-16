@@ -1,12 +1,22 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
-// TODO: Add application-wide middleware
+// DONE: Add application-wide middleware
 app.use(cors());
 
 // TODO: Add controller(s)
+const controller = require("./controllers/jobApplicationsControllers");
+app.use(controller);
 
-// TODO: Implement health check route
+// DONE: Implement health check route
+app.get("/", (req, res) => {
+  try {
+    res.status(200).send({ response: "success" });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
 
 module.exports = app;
