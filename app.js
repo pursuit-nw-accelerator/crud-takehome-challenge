@@ -6,7 +6,7 @@ const app = express();
 // DONE: Add application-wide middleware
 app.use(cors());
 
-// TODO: Add controller(s)
+// DONE: Add controller(s)
 const controller = require("./controllers/jobApplicationsControllers");
 app.use(controller);
 
