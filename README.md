@@ -7,7 +7,7 @@
 1. **Clone the Repository**:
    git clone <https://github.com/sabrimohiuddin/crud-takehome-challenge>
 2. **Navigate to the Project Directory**:
-   cd <crud-takehome-challenge>
+   cd `crud-takehome-challenge`
 3. **Install Dependencies**:
    npm install
 4. **Start the Server**:
