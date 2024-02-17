@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.json())
 
 // TODO: Add controller(s)
+const jobsController = require('./controllers/jobsController.js');
+app.use('/jobs', jobsController)
 
 // TODO: Implement health check route
 
