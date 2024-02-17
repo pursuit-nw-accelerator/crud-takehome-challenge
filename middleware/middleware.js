@@ -6,7 +6,7 @@ const idCheck = (req, res, next) => {
   const idNum = Number(id);
   if (idNum < 0 || isNaN(idNum)) {
     return res.status(400).json({
-      error: `The id (${id}) you entered must be a number and greater than 0`,
+      error: `The id you entered - ${id}, must be a number and greater than 0`,
     });
   } else {
     next();

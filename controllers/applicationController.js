@@ -37,4 +37,21 @@ applicationController.get(
   }
 );
 
+applicationController.delete(
+  "/:id",
+  idCheck,
+  applicationExist,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedApplication = await deleteApplication(Number(id));
+      if (deletedApplication) {
+        res.status(200).json({ data: deletedApplication });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 module.exports = applicationController;
