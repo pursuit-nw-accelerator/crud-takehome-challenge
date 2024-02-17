@@ -1,5 +1,10 @@
 const { Router } = require("express");
-const { idCheck, applicationExist } = require("../middleware/middleware");
+const {
+  idCheck,
+  applicationExist,
+  validKeysAndStatus,
+  missingKeys,
+} = require("../middleware/middleware");
 const {
   getAllApplications,
   getApplicationById,
@@ -47,6 +52,27 @@ applicationController.delete(
       const deletedApplication = await deleteApplication(Number(id));
       if (deletedApplication) {
         res.status(200).json({ data: deletedApplication });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+applicationController.post(
+  "/",
+
+  validKeysAndStatus,
+  missingKeys,
+  async (req, res) => {
+    try {
+      const userInputData = req.body;
+      const newApplication = await createApplication({
+        ...userInputData,
+        url: userInputData.hasOwnProperty("url") ? userInputData["url"] : null,
+      });
+      if (newApplication) {
+        res.status(201).json({ data: newApplication });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
