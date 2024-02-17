@@ -3,21 +3,12 @@ const { Router } = require("express");
 const {
   getAllApplications,
   getApplicationById,
+  createApplication,
 } = require("../queries/jobApplicationsQueries");
 
-const jobsController = Router();
+const {validateId, validateJob} = require("../validations/validations")
 
-const validateId = (id, res) => {
-  let regex = /^[1-9]\d*$/;
-  if (regex.test(id)) {
-    return true;
-  } else {
-    res
-      .status(400)
-      .json({ error: `Id param must be a postive integer! Received: ${id}` });
-    return false;
-  }
-};
+const jobsController = Router();
 
 jobsController.get("/", async (req, res) => {
   try {
@@ -43,6 +34,25 @@ jobsController.get("/:id", async (req, res) => {
     } else {
       return res.status(404).json({ error: `No job found with id: ${id}` });
     }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+jobsController.post("/", async (req, res) => {
+  try {
+    const job = req.body;
+
+    job["url"] = job["url"]?.trim() || null;
+
+    if (!validateJob(job, res)) {
+      return;
+    }
+
+    job["status"] = job["status"].toUpperCase();
+
+    const createdJob = await createApplication(job);
+    res.status(201).json({ data: createdJob });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
