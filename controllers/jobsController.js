@@ -4,9 +4,10 @@ const {
   getAllApplications,
   getApplicationById,
   createApplication,
+  updateApplication,
 } = require("../queries/jobApplicationsQueries");
 
-const {validateId, validateJob} = require("../validations/validations")
+const { validateId, validateJob } = require("../validations/validations");
 
 const jobsController = Router();
 
@@ -53,6 +54,36 @@ jobsController.post("/", async (req, res) => {
 
     const createdJob = await createApplication(job);
     res.status(201).json({ data: createdJob });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+jobsController.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const job = req.body;
+
+    if (!validateId(id, res)) {
+      return;
+    }
+
+    job["url"] = job["url"]?.trim() || null;
+
+    if (!validateJob(job, res)) {
+      return;
+    }
+
+    job["status"] = job["status"].toUpperCase();
+
+    const jobToUpdate = await getApplicationById(Number(id));
+
+    if (!jobToUpdate) {
+      return res.status(404).json({ error: `No job found with id: ${id}` });
+    }
+
+    const updatedJob = await updateApplication(Number(id), job);
+    res.status(200).json({ data: updatedJob });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
