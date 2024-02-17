@@ -5,6 +5,7 @@ const {
   getApplicationById,
   createApplication,
   updateApplication,
+  deleteApplication,
 } = require("../queries/jobApplicationsQueries");
 
 const { validateId, validateJob } = require("../validations/validations");
@@ -84,6 +85,27 @@ jobsController.put("/:id", async (req, res) => {
 
     const updatedJob = await updateApplication(Number(id), job);
     res.status(200).json({ data: updatedJob });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+jobsController.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!validateId(id, res)) {
+      return;
+    }
+
+    const jobToDelete = await getApplicationById(Number(id));
+
+    if (!jobToDelete) {
+      return res.status(404).json({ error: `No job found with id: ${id}` });
+    }
+
+    const deletedJob = await deleteApplication(Number(id));
+    res.status(200).json({ data: deletedJob });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
