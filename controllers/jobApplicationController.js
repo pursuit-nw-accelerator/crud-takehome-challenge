@@ -1,6 +1,6 @@
 const { Router, application } = require("express");
 
-const jobApplications = Router();
+const applications = Router();
 
 const {
     getAllApplications,
@@ -19,7 +19,7 @@ const {
 const app = require("../app");
 
 //GET ALL APPLICATIONS
-jobApplications.get("/", async (req, res) => {
+applications.get("/", async (req, res) => {
     try {
         const application = await getAllApplications();
         res.status(200).json({ data : application })
@@ -29,7 +29,7 @@ jobApplications.get("/", async (req, res) => {
 });
 
 // GET ONE APPLICATION
-jobApplications.get("/:id",validId,idExist,  async ( req, res ) => {
+applications.get("/:id",validId,idExist,  async ( req, res ) => {
     try{
         const { id } = req.params;
         const application = await getApplicationById(Number(id))
@@ -40,7 +40,7 @@ jobApplications.get("/:id",validId,idExist,  async ( req, res ) => {
 })
 
 // POST
-jobApplications.post("/", validInputFields, async (req, res) => {
+applications.post("/", validInputFields, async (req, res) => {
     try {
         const application = req.body;
         const newApplication = await createApplication(application)
@@ -51,7 +51,7 @@ jobApplications.post("/", validInputFields, async (req, res) => {
 })
 
 // PUT
-jobApplications.put("/:id",validInputFields, async (req, res) => {
+applications.put("/:id",validInputFields, async (req, res) => {
     try {
         const { id } = req.params;
         const application = req.body;
@@ -64,7 +64,7 @@ jobApplications.put("/:id",validInputFields, async (req, res) => {
 })
 
 // DELETE
-jobApplications.delete("/:id",validId, idExist, async(req, res) => {
+applications.delete("/:id",validId, idExist, async(req, res) => {
     try {
         const { id } = req.params;
 
@@ -76,4 +76,4 @@ jobApplications.delete("/:id",validId, idExist, async(req, res) => {
 })
 
 
-module.exports = jobApplications;
+module.exports = applications;

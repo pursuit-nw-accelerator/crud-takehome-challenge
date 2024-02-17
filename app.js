@@ -10,7 +10,7 @@ app.use(express.json())
 // TODO: Add controller(s)
 const jobApplicationController = require("./controllers/jobApplicationController");
 
-app.use('/application', jobApplicationController);
+app.use('/applications', jobApplicationController);
 
 // TODO: Implement health check route
 app.get('/', (request, response) => {

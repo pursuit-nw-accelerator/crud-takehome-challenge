@@ -1,4 +1,5 @@
 const { getApplicationById } = require("../queries/jobApplicationsQueries");
+const { applicationStatuses } = require("../constants")
 
 const validId = (req, res, next) => {
     const { id } = req.params;
