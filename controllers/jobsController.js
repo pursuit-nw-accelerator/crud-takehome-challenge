@@ -9,7 +9,7 @@ const {
 } = require("../queries/jobApplicationsQueries");
 const {
     validateId,
-    validateJob
+    validateJob,
 } = require("../validations/checkJobs")
 const jobsController = Router();
 
@@ -44,23 +44,50 @@ jobsController.get('/:id', validateId, async(req, res) => {
 jobsController.post('/', validateJob, async(req, res) => {
     try {
         const job = await createApplication(req.body)
-        res.status(200).json({ data: job });
+        if (job) {
+            res
+            .status(200).json({ data: job });
+        } else {
+            return res
+            .status(404)
+            .json({ error: `Job Application could not be created` });
+          }
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 })
 //Update a job application by id
-jobsController.put('/:id', validateId, validateJob, (req, res) => {
+jobsController.put('/:id', validateId, validateJob, async(req, res) => {
     try {
-        
+        const { id } = req.params
+        const job = await updateApplication(Number(id), req.body)
+        console.log(job)
+        if (job) {
+            res
+            .status(200).json({ data: job });
+        } else {
+            return res
+            .status(404)
+            .json({ error: `Job Application could not be updated` });
+          }
     } catch (error) {
         
     }
 })
 //Delete a job application by id
-jobsController.delete('/:id', validateId, (req, res) => {
+jobsController.delete('/:id', validateId, async(req, res) => {
     try {
-        
+        const { id } = req.params
+        const job = await deleteApplication(Number(id))
+        console.log()
+        if (job) {
+            res
+            .status(200).json({ data: job });
+        } else {
+            return res
+            .status(404)
+            .json({ error: `Job Application could not be deleted` });
+          }
     } catch (error) {
         
     }
