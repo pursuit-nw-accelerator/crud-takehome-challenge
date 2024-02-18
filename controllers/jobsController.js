@@ -2,7 +2,7 @@ const express = require('express')
 const jobs = express.Router();
 
 const { getAllApplications, getApplicationById, createApplication, updateApplication, deleteApplication, } = require('../queries/jobApplicationsQueries')
-const { checkId } = require('../validations/checkJobs.js')
+const { validateId } = require('../validations/checkJobs')
 
 jobs.get('/', async (req, res) => {
     try{
@@ -16,7 +16,7 @@ jobs.get('/', async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.get('/:id', checkId, async (req, res) => { 
+jobs.get('/:id', validateId, async (req, res) => { 
     const { id } = req.params;
     try{
         const oneJob = await getApplicationById(Number(id));
@@ -29,9 +29,21 @@ jobs.get('/:id', checkId, async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.post('/', async (req, res) => { })
+jobs.post('/', async (req, res) => {
+    try{
+        const createdJob = await createApplication(req.body);
+        if (createdJob){
+            res.status(200).json({data: createdJob})
+        }
+        else{
+            res.status(404).json({error: "Could not be created"})
+        }
+    }catch(error){
+        res.status(500).json({error: "Server Error"})
+    }
+})
 
-jobs.delete('/:id', checkId, async (req, res) => { 
+jobs.delete('/:id', validateId, async (req, res) => { 
     const { id } = req.params;
     try{
         const deleteJob = await deleteApplication(Number(id))
@@ -43,6 +55,18 @@ jobs.delete('/:id', checkId, async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.put('/:id', checkId, async (req, res) => { })
+jobs.put('/:id', validateId, async (req, res) => {
+    const { id } = req.params;
+    try{
+        const editedJob = await updateApplication(Number(id), req.body);
+        if (editedJob){
+            res.status(200).json({data: editedJob})
+        }else{
+            res.status(404).json({error: "Updating failed"})
+        }
+    }catch(error){
+        res.status(500).json({error: "Server Error"})
+    }
+})
 
 module.exports = jobs
