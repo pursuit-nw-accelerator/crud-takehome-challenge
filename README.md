@@ -44,12 +44,12 @@ node_modules
   - **Endpoint:** `/jobapplications/:id`
   - **Method:** `DELETE`
   - **Description:** Remove an existing job application based on its ID.
-/n
-/n
+<br>
+<br>
 
 ![Backend image](/assets/backend.png)
-/n
-/n
+<br>
+<br>
 
 
 
