@@ -21,32 +21,51 @@ node_modules
 
 
 # API Routes:
-API Routes
-Get All Job Applications
 
+Get All Job Applications
 Endpoint: /jobapplications
 Method: GET
 Description: Retrieve a list of all job applications.
 Get a Specific Job Application
-
 Endpoint: /jobapplications/:id
 Method: GET
 Description: Retrieve details of a specific job application by providing its ID.
 Create a New Job Application
-
 Endpoint: /jobapplications
 Method: POST
 Description: Submit a new job application.
 Update an Existing Job Application
-
 Endpoint: /jobapplications/:id
 Method: PUT
 Description: Update or modify an existing job application identified by its ID.
 Delete an Existing Job Application
-
 Endpoint: /jobapplications/:id
 Method: DELETE
 Description: Remove an existing job application based on its ID.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
