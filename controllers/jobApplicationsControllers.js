@@ -34,7 +34,7 @@ controller.get("/applications/:id", async (req, res) => {
 controller.post("/applications", async (req, res) => {
   const application = req.body;
   try {
-    const validation = validations.validateInitialApplication(application);
+    const validation = validations.validateKeys(application);
     if (validation.error) {
       res.status(500).send({ error: validation.error });
     } else {
@@ -49,9 +49,18 @@ controller.post("/applications", async (req, res) => {
 // UPDATE
 controller.put("/applications/:id", async (req, res) => {
   const { id } = req.params;
-  const application = req.body;
+  const update = req.body;
   try {
-    
+    const validation = validations.validateKeys(update);
+    if (validation.error) {
+      res.status(500).send(validation.error);
+    } else {
+      const updatedApplication = await queries.updateApplication(
+        Number(id),
+        validation
+      );
+      res.status(200).send({ data: updatedApplication });
+    }
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
@@ -60,9 +69,9 @@ controller.put("/applications/:id", async (req, res) => {
 // DELETE
 controller.delete("/applications/:id", async (req, res) => {
   const { id } = req.params;
-  const application = req.body;
   try {
-
+    const deletedApplication = await queries.deleteApplication(Number(id));
+    res.status(200).send({ data: deletedApplication });
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
