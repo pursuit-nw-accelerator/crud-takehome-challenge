@@ -2,6 +2,7 @@ const express = require('express')
 const jobs = express.Router();
 
 const { getAllApplications, getApplicationById, createApplication, updateApplication, deleteApplication, } = require('../queries/jobApplicationsQueries')
+const { checkId } = require('../validations/checkJobs.js')
 
 jobs.get('/', async (req, res) => {
     try{
@@ -15,7 +16,7 @@ jobs.get('/', async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.get('/:id', async (req, res) => { 
+jobs.get('/:id', checkId, async (req, res) => { 
     const { id } = req.params;
     try{
         const oneJob = await getApplicationById(Number(id));
@@ -30,7 +31,7 @@ jobs.get('/:id', async (req, res) => {
 })
 jobs.post('/', async (req, res) => { })
 
-jobs.delete('/:id', async (req, res) => { 
+jobs.delete('/:id', checkId, async (req, res) => { 
     const { id } = req.params;
     try{
         const deleteJob = await deleteApplication(Number(id))
@@ -42,6 +43,6 @@ jobs.delete('/:id', async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.put('/:id', async (req, res) => { })
+jobs.put('/:id', checkId, async (req, res) => { })
 
 module.exports = jobs
