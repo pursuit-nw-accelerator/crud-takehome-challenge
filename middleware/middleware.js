@@ -27,8 +27,20 @@ const applicationExist = async (req, res, next) => {
   }
 };
 
-const appKeys = ["company", "url", "status"];
-const mustKeys = ["company", "status"];
+const validKeys = (req, res, next) => {
+  const newAppData = req.body;
+  const newAppDataKeys = Object.keys(newAppData);
+  const appKeys = ["company", "url", "status"];
+
+  for (let key of newAppDataKeys) {
+    if (!appKeys.includes(key)) {
+      res.status(400).json({
+        error: `Invalid key - ${key}.`,
+      });
+    }
+  }
+  next();
+};
 
 const applicationStatuses = {
   CREATED: "CREATED", // the job was added to app, but no action taken yet
@@ -40,42 +52,37 @@ const applicationStatuses = {
   OFFER_ACCEPTED: "OFFER_ACCEPTED", // the user accepted the offer
   OFFER_DECLINED: "OFFER_DECLINED", // the user declined the offer
 };
-const statusValues = Object.values(applicationStatuses);
 
-const validKeysAndStatus = (req, res, next) => {
+const validStatus = (req, res, next) => {
+  const statusValues = Object.values(applicationStatuses);
   const newAppData = req.body;
-  const newAppDataKeys = Object.keys(newAppData);
-
-  for (let key of newAppDataKeys) {
-    if (!appKeys.includes(key)) {
-      res.status(400).json({
-        error: `Invalid key - ${key}.`,
-      });
-    } else {
-      next();
-    }
-  }
-  if (!statusValues.includes(newAppData["status"])) {
+  if (
+    newAppData.hasOwnProperty("status") &&
+    !statusValues.includes(newAppData["status"])
+  ) {
     res.status(400).json({ data: `The value for the status is not valid` });
+  } else {
+    next();
   }
 };
 
 const missingKeys = (req, res, next) => {
   const newAppData = req.body;
   const newAppDataKeys = Object.keys(newAppData);
+  const mustKeys = ["company", "status"];
 
   for (let key of mustKeys) {
     if (!newAppDataKeys.includes(key)) {
       res.status(400).json({ error: `Missing key - ${key}` });
-    } else {
-      next();
     }
   }
+  next();
 };
 
 module.exports = {
   idCheck,
   applicationExist,
-  validKeysAndStatus,
+  validKeys,
   missingKeys,
+  validStatus,
 };

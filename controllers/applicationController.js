@@ -2,8 +2,9 @@ const { Router } = require("express");
 const {
   idCheck,
   applicationExist,
-  validKeysAndStatus,
+  validKeys,
   missingKeys,
+  validStatus,
 } = require("../middleware/middleware");
 const {
   getAllApplications,
@@ -61,9 +62,9 @@ applicationController.delete(
 
 applicationController.post(
   "/",
-
-  validKeysAndStatus,
   missingKeys,
+  validKeys,
+  validStatus,
   async (req, res) => {
     try {
       const userInputData = req.body;
@@ -73,6 +74,31 @@ applicationController.post(
       });
       if (newApplication) {
         res.status(201).json({ data: newApplication });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+applicationController.put(
+  "/:id",
+  idCheck,
+  missingKeys,
+  validKeys,
+  validStatus,
+  applicationExist,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const application = req.body;
+
+      const updatedApplication = await updateApplication(
+        Number(id),
+        application
+      );
+      if (application) {
+        res.status(200).json({ data: updatedApplication });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
