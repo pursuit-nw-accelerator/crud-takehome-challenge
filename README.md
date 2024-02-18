@@ -18,3 +18,9 @@
 - Delete: `http://localhost:9000/applications/(id)`
 
 **Note:** `(id)` must be an integer. 
+
+## Validations
+- Data must be on `json` format.
+- Must have `company` and `status` fields.
+- The value of `status` must contain one of those following: `'CREATED'`, `'APPLIED'`, `'REJECTED'`, `'PHONE_SCREEN'`, `'ON_SITE'`, `'RECEIVED_OFFER'`, `'OFFER_ACCEPTED'`, `'OFFER_DECLINED'`
+- The `url` field is optional.
