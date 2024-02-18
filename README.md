@@ -5,8 +5,6 @@
 
 # **Installation**
 
-## **Back-end**
-
 1.  Clone the repository:   git clone <repository URL>
 2.  Navigate to the crud-takehome-challenge: type 'cd crud-takehome-challenge' in the terminal
 3.  Install the back-end dependencies:  type 'npm install' in the terminal
@@ -46,7 +44,12 @@ node_modules
   - **Endpoint:** `/jobapplications/:id`
   - **Method:** `DELETE`
   - **Description:** Remove an existing job application based on its ID.
+/n
+/n
 
+![Backend image](/assets/backend.png)
+/n
+/n
 
 
 
