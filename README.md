@@ -51,22 +51,32 @@ As a client, I should be able to:
     - Detailed, working step by step instructions on how to run the server locally
     - A complete list of methods + routes that your API supports (ex: `GET /students/:id, PUT /students/:id`) 
 
-## How you'll be evaluated
-In order to pass the interview, you must implement ALL of the user stories and other requirements EXACTLY, with no bugs or other problems.
+# Take Home Backend CRUD Operations
+## Dennys Antunish
+### Follow the below steps to run this project
+- open a new directory on your computer (or any folder you wish to have this project in) and then run the command git clone 
+- Run the command `code .` to open the repisotry to vscode
+- Run the command `npm i express cors nodemon dotenv` to install the neccasry packages to ensure the project runs smoothly
+- run the command `nodemon start` and then head to http://localhost:9000/ 
 
-Make sure you read this README and the [starter code](#starter-code) carefully. 
+## Routes/Methods
+### The below routes + methods are supported on this project
+Get All job applications
+- GET /students/
 
-You will receive feedback and have one opportunity to correct any issues.
+Get a job application by id
+- GET /students/:id
 
-## <a id="starter-code"></a> Working with the starter code and data
+Create a job application
+- POST /students/
 
-Instead of using a real database, your API will read from a JSON object (see `/data/db/jobApplicationsData.json`). When your server starts, this data will be read into memory. Whenever you restart the server, any changes you made to the data will be lost.
+Update a job application by id
+- PUT /students/:id
 
-You can see in this file that a job application has several properties: `id` (set automatically by the database), `company`, `url` (optional), and `status`. `createdAt` and `updatedAt` are automatically added when a job application is created or updated.
+Delete a job application by id
+- DELETE /students/:id
 
-In the file `/queries/jobApplicationsQueries.js` there are already some methods that can create, read, update, or delete the applications in the JSON file. You should understand how these methods work, what they return, and how you'll use them in your code. You should not need to modify them at all.
 
-Notice that the query methods are `async` functions, just like they would have to be if they queried an actual database. **Do not** change them to non-async functions.
 
 
 

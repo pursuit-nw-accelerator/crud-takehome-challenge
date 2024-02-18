@@ -42,16 +42,13 @@ const validateJob = (req, res, next) => {
         return res.status(404)
         .json({error: `Invalid Data Type of ${typeof jobData["status"]} for Status when String requried`})
     } else {
-        console.log(applicationStatuses[jobData["status"]])
         if(typeof applicationStatuses[jobData["status"]] === "undefined"){
-            console.log("ddws")
             return res.status(404)
             .json({error: `Invalid Status: ${jobData["status"]}`})
         }
     }
 
     next()
-
 }
 
 module.exports = { validateId, validateJob };
