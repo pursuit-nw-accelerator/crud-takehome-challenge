@@ -40,13 +40,13 @@
 
 3. **POST /applications**
 - Creates a new job application based on the provided data in the request body.
-- Validates the input fields to ensure correct data type is filled or missing.
-- Returns a JSON response with the newly created application data and a status code of 201 if successful.
+- Validates the input fields to ensure correct data type is filled, missing or empty.
+- Returns a JSON response with the newly created application data and a status code of 201   if successful.
 - Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
 4. **PUT /applications/:id**
 - Updates an existing job application with the provided data in the request body.
-- Validates the ID parameter and input fields.
+- Validates the ID parameter and input fields with right data type, if it is empty or missing.
 - Returns a JSON response with the updated application data and a status code of 200 if successful.
 - Returns a JSON response with an error message and a status code of 500 if an error occurs.
 

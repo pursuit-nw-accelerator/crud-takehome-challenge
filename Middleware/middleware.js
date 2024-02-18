@@ -33,8 +33,11 @@ const validInputFields = (req, res, next) => {
         if(!application.hasOwnProperty(field) || typeof application[field] !== "string" && !(field === 'url' && application[field] === null)){
            return res.status(400).json({error: `${field} field missing or wrong data type, recived ${application[field]}`})
         } 
+        if(application[field].length === 0){
+            return res.status(400).json({error : `${field} cannot be empty`})
+        }
     }
-
+    
     for(let field in application){
         if(!application_fields.includes(field)){
            return res.status(400).json({error: `${field} is not allowed. Please fill only the required inputs`})
