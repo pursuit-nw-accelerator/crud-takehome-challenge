@@ -7,6 +7,11 @@ const {
   updateApplication,
   deleteApplication
 } = require("../queries/jobApplicationsQueries");
+const {
+  checkKeys,
+  checkCompany,
+  checkStatus
+} = require("../validations/checkApplication");
 
 // Get All
 items.get('/', async(req, res) => {
@@ -41,9 +46,12 @@ items.get("/:id", async (req, res) => {
 });
 
 // Add New
-items.post("/", async (req, res) => {
+items.post("/", checkKeys, checkCompany, checkStatus, async (req, res) => {
   try {
     const application = await createApplication(req.body);
+    if (!application.url) {
+      application.url = null;
+    }
     res.status(201).json({ data: application });
   }
   catch (err) {
@@ -52,7 +60,7 @@ items.post("/", async (req, res) => {
 });
 
 // Update
-items.put("/:id", async (req, res) => {
+items.put("/:id", checkKeys, checkCompany, checkStatus, async (req, res) => {
   const { id } = req.params;
   if (!Number.isInteger(Number(id)) || Number(id) < 1) {
     return res.status(400).json({ error: `id ${id} is not valid` });
