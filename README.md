@@ -1,4 +1,4 @@
-1. # Job Application Management
+# Job Application Management
 
 # Karma S Ghale
 
