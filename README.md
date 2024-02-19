@@ -4,16 +4,24 @@
 
 
 ### Getting started
+
 1. **Clone the Repository**: Use the following command to clone the repository:
    ```bash
    git clone <repository_url>
-1. **Install Dependencies**: Run this command to install dependencies:
+   ```
+
+2. **Install Dependencies**: Run this command to install dependencies:
     ```bash
     npm install
-1. **Start**: Start the server using:
+   ```
+
+3. **Start**: Start the server using:
     ```bash
     npm start
+   ```
+
 Visit [http://localhost:9000](http://localhost:9000) to access the server.
+
 **Note:** The default port is set to `9000`.
 
 
