@@ -29,7 +29,7 @@ jobs.get('/:id', validateId, async (req, res) => {
         res.status(500).json({error: "Server Error"})
     }
 })
-jobs.post('/', async (req, res) => {
+jobs.post('/', validateApp, async (req, res) => {
     try{
         const createdJob = await createApplication(req.body);
         if (createdJob){
@@ -43,10 +43,10 @@ jobs.post('/', async (req, res) => {
     }
 })
 
-jobs.delete('/:id', validateId, validateApp, async (req, res) => { 
+jobs.delete('/:id', validateId, async (req, res) => { 
     const { id } = req.params;
     try{
-        const deleteJob = await deleteApplication(Number(id))
+        const deleteJob = await deleteApplication(id)
         if(!deleteJob){
             res.status(404).json({error: "Could not delete because it was not found"})
         }
