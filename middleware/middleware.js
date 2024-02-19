@@ -1,4 +1,6 @@
 const  {getApplicationById } = require("../queries/jobApplicationsQueries");
+const applicationStatuses = require("../constants.js");
+
 
 const JOB_APP_FIELDS = [
     "company",
@@ -21,26 +23,39 @@ const validateIdMiddleware = (request, response, next) => {
 
   const validateJobAppMiddleware = (request, response, next) => {
     const jobApplication = request.body;
-    // Each of JOB_APP_FIELDS must be present and must be a string and not empty string.
-    for (const field of JOB_APP_FIELDS) {
-      // return false if field is not a key in jobApplications, or if the value is not a string
-      if (!jobApplication.hasOwnProperty(field) || typeof jobApplication[field] !== "string" || jobApplication[field].trim() === "") {
+
+    // Validate status field
+    if (
+        !jobApplication.hasOwnProperty("status") ||
+        !Object.values(applicationStatuses).includes(jobApplication["status"])
+    ) {
         return response.status(400).json({
-          error: `Field ${field} is not present or wrong type, received ${jobApplication[field]}`,
+            error: `Invalid status. Allowed values: ${Object.values(applicationStatuses).join(", ")}`,
         });
-      }
     }
 
-  // The jobApplications cannot have any extra fields NOT in JOB_APP_FIELDS
-  // (Example: cannot have an extra "admin" field)
-  for (const field in jobApplication) {
-    if (!JOB_APP_FIELDS.includes(field)) {
-      return response.status(400).json({ error: `Field ${field} not allowed` });
+    // Each of JOB_APP_FIELDS must be present and must be a string and not an empty string.
+    for (const field of JOB_APP_FIELDS) {
+        // return false if field is not a key in jobApplications, or if the value is not a string
+        if (!jobApplication.hasOwnProperty(field) || typeof jobApplication[field] !== "string" || jobApplication[field].trim() === "") {
+            return response.status(400).json({
+                error: `Field ${field} is not present or wrong type, received ${jobApplication[field]}`,
+            });
+        }
     }
-  }
-  request.jobApplication = jobApplication;
-  next();
+
+    // The jobApplications cannot have any extra fields NOT in JOB_APP_FIELDS
+    // (Example: cannot have an extra "admin" field)
+    for (const field in jobApplication) {
+        if (!JOB_APP_FIELDS.includes(field)) {
+            return response.status(400).json({ error: `Field ${field} not allowed` });
+        }
+    }
+
+    request.jobApplication = jobApplication;
+    next();
 };
+
 
 
 const validatejobAppExistsMiddleware = async (request, response, next) => {
