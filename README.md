@@ -1,7 +1,7 @@
 # CRUD back end takehome challenge
 # Mark Robertson
 
-<!-- ![Backend image](/assets/backend.png) -->
+![Backend image](/assets/backend.png)
 
 # **Installation**
 
