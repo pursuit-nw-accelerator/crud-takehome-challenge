@@ -1,5 +1,5 @@
-const constants = require("../constants")
-const validFields = ['company, status']
+const applicationStatuses = require("../constants")
+const validFields = ['company', 'status', 'url']
 
 const validateId = (req, res, next) => {
     const { id } = req.params;
@@ -10,30 +10,34 @@ const validateId = (req, res, next) => {
     next();
 }
 
-const validateApp = (req, res, next) => {
-    const {jobApp} = req.body;
+    const validateApp = (req, res, next) => {
+        const jobApp  = req.body;
+        if (!jobApp || typeof jobApp !== 'object' )
 
-    for (const field of validFields){
-        if(!jobApp.hasOwnProperty(field)){
-            return response.status(400).json({
-                error: `${field} is missing or wrong, received ${jobApp[field]}`
-            })
+        for (const field of validFields){
+            if(!jobApp.hasOwnProperty(field)){
+                return response.status(400).json({
+                    error: `${field} is missing or wrong, received ${jobApp[field]}`
+                })
+            }
         }
-    }
-    if (typeof jobApp['company'] !== 'string'){
-        return res.status(400).json({error: `Something is wrong with ${jobApp['company']}`})
-    }
-    if (typeof jobApp['status'] !== 'string' || !constants.includes(jobApp['status'].toUpperCase())){
-        return res.status(400).json({error: `Status ${jobApp['status']} is not available`})
-    }
-    
-    for (const field in jobApp){
-        if (!validFields.includes(field)){
-            return response.status(400).json({error: `${field} is not allowed.`})
+        if (typeof jobApp['company'] !== 'string'){
+            return res.status(400).json({error: `Something is wrong with ${jobApp['company']}`})
         }
-    }
+        if (typeof jobApp['status'] !== 'string' || !Object.values(applicationStatuses).includes(jobApp['status'].toUpperCase())){
+            return res.status(400).json({error: `Status ${jobApp['status']} is not available`})
+        }
+        
+        for (const field in jobApp){
+            if (!validFields.includes(field)){
+                return res.status(400).json({error: `${field} is not allowed.`})
+            }
+        }
+        if(!jobApp['url']){
+            jobApp['url'] = null
+        }
 
-    next()
-}
+        next()
+    }
 
 module.exports = { validateId, validateApp }
