@@ -32,13 +32,14 @@ jobappController.get(
     validatejobAppExistsMiddleware,
     async (request, response) => {
         try {
-            const { jobApplication } = request;
-            response.status(200).json({ data: jobApplication });
+            const { jobApplications } = request; // Corrected from jobApplication to jobApplications
+            response.status(200).json({ data: jobApplications });
         } catch (err) {
             response.status(500).json({ error: err.message });
         }
     }
 );
+
 
 // POST / jobApplication
 jobappController.post(
