@@ -20,25 +20,25 @@ const validateIdMiddleware = (request, response, next) => {
   };
 
   const validateJobAppMiddleware = (request, response, next) => {
-    const jobApplications = request.body;
+    const jobApplication = request.body;
     // Each of JOB_APP_FIELDS must be present and must be a string and not empty string.
     for (const field of JOB_APP_FIELDS) {
       // return false if field is not a key in jobApplications, or if the value is not a string
-      if (!jobApplications.hasOwnProperty(field) || typeof jobApplications[field] !== "string" || jobApplications[field].trim() === "") {
+      if (!jobApplication.hasOwnProperty(field) || typeof jobApplication[field] !== "string" || jobApplication[field].trim() === "") {
         return response.status(400).json({
-          error: `Field ${field} is not present or wrong type, received ${jobApplications[field]}`,
+          error: `Field ${field} is not present or wrong type, received ${jobApplication[field]}`,
         });
       }
     }
 
   // The jobApplications cannot have any extra fields NOT in JOB_APP_FIELDS
   // (Example: cannot have an extra "admin" field)
-  for (const field in jobApplications) {
+  for (const field in jobApplication) {
     if (!JOB_APP_FIELDS.includes(field)) {
       return response.status(400).json({ error: `Field ${field} not allowed` });
     }
   }
-  request.jobApplications = jobApplications;
+  request.jobApplication = jobApplication;
   next();
 };
 
