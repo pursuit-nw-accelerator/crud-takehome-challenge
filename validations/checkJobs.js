@@ -12,11 +12,10 @@ const validateId = (req, res, next) => {
 
     const validateApp = (req, res, next) => {
         const jobApp  = req.body;
-        if (!jobApp || typeof jobApp !== 'object' )
 
         for (const field of validFields){
             if(!jobApp.hasOwnProperty(field)){
-                return response.status(400).json({
+                return res.status(400).json({
                     error: `${field} is missing or wrong, received ${jobApp[field]}`
                 })
             }
