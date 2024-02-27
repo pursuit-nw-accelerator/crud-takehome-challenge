@@ -50,7 +50,7 @@ const validStatus = (req, res, next) => {
     // console.log(applicationStatuses)
      const statusField = Object.values(applicationStatuses);
 
-    if (!application.hasOwnProperty("status") || !applicationStatuses[application.status]) {
+    if (!applicationStatuses[application.status]) {
         return res.status(400).json({error: `Invalid status: ${application.status}. Status must be one of the following: ${statusField.join(", ")}`});
     }
     next();

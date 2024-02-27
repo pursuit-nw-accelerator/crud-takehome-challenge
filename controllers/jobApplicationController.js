@@ -45,6 +45,9 @@ applications.post("/", validInputFields, validStatus, async (req, res) => {
     try {
         const application = req.body;
         const newApplication = await createApplication(application)
+        if (!newApplication.url) {
+            newApplication.url = null;
+          }
         res.status(201).json({data: newApplication})
     } catch(err){
         res.status(500).json({ err: err.message })
