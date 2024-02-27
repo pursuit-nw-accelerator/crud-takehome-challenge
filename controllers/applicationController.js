@@ -84,7 +84,7 @@ items.put("/:id", checkKeys, checkCompany, checkStatus, async (req, res) => {
 // Delete
 items.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  if (!Number.isInteger(Number(id))) {
+  if (!Number.isInteger(Number(id)) || Number(id) < 1) {
     return res.status(400).json({ error: `id ${id} is not valid` });
   }
   
