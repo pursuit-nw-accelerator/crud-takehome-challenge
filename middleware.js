@@ -63,42 +63,40 @@ const validateData = (req, res, next) => {
 };
 
 const validatePutData = (req, res, next) => {
-  let tempmod = [...temp];
-  tempmod.splice(1, 0, "createdAt");
-  let keys = Object.keys(req.body);
-  let values = Object.values(req.body);
-  keys.sort();
-  let dateCheck =
-    req.body.hasOwnProperty("createdAt") &&
-    isValidDateString(req.body.createdAt);
-  let checkStatus =
-    req.body.hasOwnProperty("status") && isValidStatus(req.body.status);
-  let checkUrl = isValidUrl(req.body?.url);
-  if (!req.body.hasOwnProperty("url") || req.body?.url === null) {
-    checkUrl = true;
+  const errs = [];
+  let count = 0;
+  for (let [k, v] of Object.entries(req.body)) {
+    if (!temp.includes(k)) {
+      errs.push(`invalid key in body: ${k}`);
+    }
+    if (k == "url" && typeof v != "string") {
+      v !== null && errs.push(`invalid url type need string`);
+    }
+    if (k == "company" && typeof v != "string") {
+      errs.push("invalid company need string");
+    }
+    if (k == "company" && typeof v == "string" && v.length < 1) {
+      errs.push("empty company string");
+    }
+    if (k == "status" && !Object.values(applicationStatuses).includes(v)) {
+      errs.push(`invalid status: ${v}`);
+    }
+    if (k == "company" || k == "status") {
+      count++;
+    }
   }
-  if (!req.body.hasOwnProperty("createdAt")) {
-    dateCheck = true;
+  if (count < 2) {
+    errs.push("company and status keys required");
   }
-  if (!req.body.hasOwnProperty("status")) {
-    checkStatus = true;
-  }
-  if (!dateCheck || !checkStatus || !checkUrl) {
+  if (errs.length) {
     res.status(400).json({
-      error:
-        `Invalid ${!dateCheck ? "date string" : ""} ${!checkStatus ? "job search status" : ""} ${!checkUrl ? "url String" : ""}`.trim(),
+      error: errs.join(", "),
     });
   } else {
-    const bool =
-      values.every((value) => typeof value === "string") &&
-      keys.every((item) => tempmod.includes(item));
-    if (!bool) {
-      res.status(400).json({
-        error: "update createdAt company status or url with strings",
-      });
-    } else {
-      next();
+    if (!req.body.hasOwnProperty("url")) {
+      req.body.url = null;
     }
+    next();
   }
 };
 
