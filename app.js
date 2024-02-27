@@ -30,10 +30,10 @@ app.use((req, res, next) => {
 app.use("/v1/jobApplications", require('./controllers/jobApplications'));
 // TODO: Implement health check route
 app.get('/', (req, res) => {
-  res.send("Server is running.");
+  res.json({ data: "Server is running." });
 });
 app.get('*', (req, res) => {
-  res.status(404).send('Page not found.');
+  res.status(404).json({ error: 'Page not found.' });
 });
 ////////////////////////////////////////////////////
 module.exports = app;

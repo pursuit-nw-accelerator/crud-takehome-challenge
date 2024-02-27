@@ -6,6 +6,13 @@ const returnError = (message) => {
 
 const newJobApplication = (req, res, next) => {
   let { company, status, url } = req.body;
+  const bodyTemplate = { company: true, status: true, url: true };
+
+  for (let key in req.body) if (bodyTemplate[key] === undefined) {
+    res.status(400).json(returnError("request only accept company, status, url as key name."));
+    return;
+  }
+
   if (status === undefined || constants[status] === undefined) {
     res.status(400).json(returnError("status not vaild."));
     return;
@@ -23,7 +30,7 @@ const newJobApplication = (req, res, next) => {
 
 const queryId = (req, res, next) => {
   let { id } = req.params;
-  if (!Number.isInteger(Number(id))) {
+  if (!Number.isInteger(Number(id)) && id >= 0) {
     res.status(400).json(returnError("id not vaild."));
     return;
   }

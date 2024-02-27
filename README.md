@@ -53,3 +53,9 @@ All URLs referenced in the documentation have the base path `/v1/jobApplications
 - **Description:** Deletes a job application by its ID.
 - **Parameters:**
   - `id` (path) - The unique identifier of the job application to delete.
+
+### 6. Delete Job Application
+
+- **Method:** GET
+- **Path:** `/`
+- **Description:** Health check endpoint.
