@@ -4,7 +4,7 @@ const { applicationStatuses } = require("../constants")
 const validId = (req, res, next) => {
     const { id } = req.params;
     if(!Number.isInteger(Number(id)) || Number(id) < 1){
-        return res.status(400).json({error: `id param ${id} must be positive integer;`})
+        return res.status(404).json({error: `id param ${id} must be positive integer;`})
     }else {
         next();
     }
@@ -14,7 +14,7 @@ const idExist = async (req, res, next) => {
     const { id } = req.params;
     const application = await getApplicationById(Number(id));
     if(!application){
-       return res.status(400).json({error: `id param ${id} doesnot exist;`})
+       return res.status(404).json({error: `id param ${id} doesnot exist;`})
     }else {
         next();
     }
