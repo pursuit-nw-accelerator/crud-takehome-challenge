@@ -18,6 +18,7 @@
 I suggest using Postman to send requests
 (SERVER MUST BE RUNNING):
 
+- `GET /`: Simple health check route
 - `GET /applications`: Get all job applications.
 - `GET /applications/:id`: Get a specific job application by ID.
 - `POST /applications`: Create a new job application.

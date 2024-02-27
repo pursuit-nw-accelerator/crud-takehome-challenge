@@ -1,24 +1,20 @@
-const controllers = require('./controllers/jobsController')
-
+// app.js
 const express = require('express');
 const cors = require('cors');
+const jobApplicationsRoutes = require('./routes/jobApplicationsRoutes');
 
 const app = express();
 
-// TODO: Add application-wide middleware
-app.use(express.json())
+// Middleware
+app.use(express.json());
 app.use(cors());
 
-// TODO: Add controller(s)
-app.get('/applications', controllers.getJobApplications)
-app.get('/applications/:id', controllers.getJobApplicationById)
-app.post('/applications', controllers.createJobApplication)
-app.put('/applications/:id', controllers.updateJobApplication)
-app.delete('/applications/:id', controllers.deleteJobApplication)
+// Routes
+app.use('/applications', jobApplicationsRoutes);
 
-// TODO: Implement health check route
-app.get('/health', (req, res) => {
+// Health check route
+app.get('/', (req, res) => {
     res.send('Health Check OK');
-  });
+});
 
 module.exports = app;
