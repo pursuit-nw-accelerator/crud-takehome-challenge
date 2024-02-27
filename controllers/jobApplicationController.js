@@ -51,7 +51,7 @@ applications.post("/", validInputFields, async (req, res) => {
 })
 
 // PUT
-applications.put("/:id",validInputFields, async (req, res) => {
+applications.put("/:id",validId, idExist, validInputFields, async (req, res) => {
     try {
         const { id } = req.params;
         const application = req.body;
