@@ -1,5 +1,5 @@
 const { getApplicationById } = require("../queries/jobApplicationsQueries");
-const { applicationStatuses } = require("../constants")
+const  applicationStatuses  = require("../constants")
 
 const validId = (req, res, next) => {
     const { id } = req.params;
@@ -45,9 +45,20 @@ const validInputFields = (req, res, next) => {
     next()
 }
 
+const validStatus = (req, res, next) => {
+    const application = req.body;
+    // console.log(applicationStatuses)
+     const statusField = Object.values(applicationStatuses);
+
+    if (!application.hasOwnProperty("status") || !applicationStatuses[application.status]) {
+        return res.status(400).json({error: `Invalid status: ${application.status}. Status must be one of the following: ${statusField.join(", ")}`});
+    }
+    next();
+}
 
 module.exports = {
     validId,
     idExist,
     validInputFields,
+    validStatus,
 }

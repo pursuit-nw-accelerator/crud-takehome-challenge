@@ -14,6 +14,7 @@ const {
     validId,
     idExist,
     validInputFields,
+    validStatus,
 } = require("../Middleware/middleware");
 
 const app = require("../app");
@@ -40,7 +41,7 @@ applications.get("/:id",validId,idExist,  async ( req, res ) => {
 })
 
 // POST
-applications.post("/", validInputFields, async (req, res) => {
+applications.post("/", validInputFields, validStatus, async (req, res) => {
     try {
         const application = req.body;
         const newApplication = await createApplication(application)
@@ -51,7 +52,7 @@ applications.post("/", validInputFields, async (req, res) => {
 })
 
 // PUT
-applications.put("/:id",validId, idExist, validInputFields, async (req, res) => {
+applications.put("/:id",validId, idExist, validInputFields, validStatus, async (req, res) => {
     try {
         const { id } = req.params;
         const application = req.body;
