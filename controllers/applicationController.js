@@ -71,9 +71,10 @@ items.put("/:id", checkKeys, checkCompany, checkStatus, async (req, res) => {
     if (!search) {
       res.status(404).json({ error: `Application with id ${id} not found` });
     }
-
-    const application = await updateApplication(Number(id), req.body);
-    res.status(200).json({ data: application });
+    else {
+      const application = await updateApplication(Number(id), req.body);
+      res.status(200).json({ data: application });
+    }
   }
   catch (err) {
     res.status(500).json({ error: err.message });
@@ -92,13 +93,9 @@ items.delete("/:id", async (req, res) => {
     if (!search) {
       res.status(404).json({ error: `Application with id ${id} not found` });
     }
-
-    const application = await deleteApplication(Number(id));
-    if (application) {
-      res.status(200).json({ data: application });
-    }
     else {
-      res.status(404).json({ error: `Application with id ${id} not found` });
+      const application = await deleteApplication(Number(id));
+      res.status(200).json({ data: application });
     }
   }
   catch (err) {
