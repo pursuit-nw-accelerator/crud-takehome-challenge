@@ -7,8 +7,8 @@
 ### Instructions to Run the Server Locally
 
 1. Clone the repository.
-2. Install dependencies using npm.
-3. Start the server.
+2. Install dependencies using npm. ### npm install
+3. Start the server. ### npm start
 4. The server should now be running locally. You can access it at `http://localhost:9000` and check the health status.
 
 ### API Routes
