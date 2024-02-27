@@ -70,7 +70,7 @@ applicationController.post(
       const userInputData = req.body;
       const newApplication = await createApplication({
         ...userInputData,
-        url: userInputData.hasOwnProperty("url") ? userInputData["url"] : null,
+        url: userInputData.url ? userInputData["url"] : null,
       });
       if (newApplication) {
         res.status(201).json({ data: newApplication });

@@ -5,9 +5,9 @@ const { getApplicationById } = require("../queries/jobApplicationsQueries");
 const idCheck = (req, res, next) => {
   const { id } = req.params;
   const idNum = Number(id);
-  if (idNum < 0 || isNaN(idNum)) {
+  if (idNum < 0 || isNaN(idNum) || !Number.isInteger(idNum)) {
     return res.status(400).json({
-      error: `The id you entered - ${id}, must be a number and greater than 0`,
+      error: `The id you entered - ${id}, must be a number (Integer) and greater than 0`,
     });
   } else {
     next();
@@ -19,7 +19,7 @@ const applicationExist = async (req, res, next) => {
   const application = await getApplicationById(id);
 
   if (!application) {
-    res
+    return res
       .status(404)
       .json({ error: `An application with the id - ${id} does not exist` });
   } else {
@@ -34,7 +34,7 @@ const validKeys = (req, res, next) => {
 
   for (let key of newAppDataKeys) {
     if (!appKeys.includes(key)) {
-      res.status(400).json({
+      return res.status(400).json({
         error: `Invalid key - ${key}.`,
       });
     }
@@ -56,11 +56,10 @@ const applicationStatuses = {
 const validStatus = (req, res, next) => {
   const statusValues = Object.values(applicationStatuses);
   const newAppData = req.body;
-  if (
-    newAppData.hasOwnProperty("status") &&
-    !statusValues.includes(newAppData["status"])
-  ) {
-    res.status(400).json({ data: `The value for the status is not valid` });
+  if (!statusValues.includes(newAppData["status"])) {
+    return res
+      .status(400)
+      .json({ error: `The value for the status is not valid` });
   } else {
     next();
   }
@@ -73,7 +72,7 @@ const missingKeys = (req, res, next) => {
 
   for (let key of mustKeys) {
     if (!newAppDataKeys.includes(key)) {
-      res.status(400).json({ error: `Missing key - ${key}` });
+      return res.status(400).json({ error: `Missing key - ${key}` });
     }
   }
   next();
