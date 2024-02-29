@@ -1,72 +1,116 @@
-# CRUD back end takehome challenge
+# JOB APPLICATIONS ( CRUD back end takehome challenge )
 
-Imagine you are a software engineer applying for your first job. You are going to create a back end application so you can keep track of the jobs you apply for and their current status.
 
-You should use only your own code. Do not use ChatGPT or generative AI, and do not copy code from anyone else. If you look up how to do something, cite the URL in a comment next to the code you use.
+## TSHERING GURUNG
 
-**I expect you to be able to explain clearly and correctly what every single line of code does in your submission.**
 
-## Getting started
-1. Fork this repo.
-1. Clone your fork to your machine.
-1. run `npm install` to install dependencies, and `npm start` to start the server.
-1. Write code to implement the [user stories](#user-stories) and [other requirements](#other-requirements) below.
-1. Commit and push your code as you go, ideally one commit per user story or requirement.
+### Instructions to Run the Server Locally
 
-## Submitting
-When you have completed ALL the [user stories](#user-stories) and [other requirements](#other-requirements) EXACTLY, push all your code to GitHub and open a PR against the upstream repo. (This should be a PR against the repo owned by the `pursuit-nw-accelerator` org, not a PR against your own repo.)
+1. Clone the repository.
+2. Install dependencies by running -- npm install
+3. Start the server by running -- npm start
+4. The server should now be running locally. You can access it at `http://localhost:3003` and check the health status.
 
-Do not submit until you are confident you have completed ALL the requirements EXACTLY.
+### API Routes
 
-Submissions must be posted as a PR by the deadline. Extensions will not be accepted.
+- **GET /applications**
+- Description: Get all job applications.
+- **GET /applications/:id**
+- Description: Get a specific job application by its ID.
+- **POST /applications**
+- Description: Create a new job application.
+- **PUT /applications/:id**
+- Description: Update an existing job application.
+- **DELETE /applications/:id**
+- Description: Delete an existing job application.
 
-## <a id="user-stories"></a> User stories
-As a client, I should be able to:
-1. Know if the API is up and running by visiting a health check route.
-1. See all the job applications I have created.
-1. See a specific job application, requested by its id.
-1. Create a new job application.
-1. Update / change an existing job application.
-1. Delete an existing job application.
+### API Methodo
 
-## <a id="other-requirements"></a> Other requirements
-1. Your API should not cause CORS errors in the Google Chrome web browser.
-1. All routes should return JSON with the correct status code.
-1. Route names and methods follow proper REST conventions (`POST /applications`, not `POST /make_new_application`)
-1. For a successful response, return JSON in this format: `{ "data": <data to be returned> }`
-1. When there is an error, return JSON in this format: `{ "error": <the actual error message> }`
-1. Your application should be organized into a controller layer, a query layer, and middleware.
-1. When your server starts, it should listen on a port specified by the `PORT` environment variable. If there is no environment variable, it should listen on port 9000 as a default.
-1. Catch all server errors and return the appropriate status code. Do not swallow any errors or error messages.
-1. Return the correct error and status code if the application the client wants to read, update, or delete is not found.
-1. When a route includes an `id` param, validate that the id can be parsed as a positive integer. Return the correct status code and message if the id is not valid.
-1. When creating or updating an application, validate the client's input. Return the correct status code if it's not valid.
-    - There must be a company and status
-    - The status must be one of the statuses listed in `constants.js`
-    - The url field is optional, but should have a `null` value if it isn't present.
-    - No other fields should be present (including `id`, `createdAt`, `updatedAt`, `admin`, etc.)
-1. Replace this README with a new README file. It must contain the following:
-    - A title
-    - Your name
-    - Detailed, working step by step instructions on how to run the server locally
-    - A complete list of methods + routes that your API supports (ex: `GET /students/:id, PUT /students/:id`) 
+1. **GET /applications**
+- Retrieves all job applications stored in the database.
+- Returns a JSON response with a status code of 200 if successful.
+- Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
-## How you'll be evaluated
-In order to pass the interview, you must implement ALL of the user stories and other requirements EXACTLY, with no bugs or other problems.
+2. **GET /applications/:id**
+- Retrieves a specific job application by its ID.
+- Validates the ID parameter to ensure it is a positive integer.
+- Checks if the application with the specified ID exists.
+- Returns a JSON response with the application data and a status code of 200 if successful.
+- Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
-Make sure you read this README and the [starter code](#starter-code) carefully. 
+3. **POST /applications**
+- Creates a new job application based on the provided data in the request body.
+- Validates the input fields to ensure correct data type is filled, missing or empty.
+- Returns a JSON response with the newly created application data and a status code of 201   if successful.
+- Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
-You will receive feedback and have one opportunity to correct any issues.
+4. **PUT /applications/:id**
+- Updates an existing job application with the provided data in the request body.
+- Validates the ID parameter and input fields with right data type, if it is empty or missing.
+- Returns a JSON response with the updated application data and a status code of 200 if successful.
+- Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
-## <a id="starter-code"></a> Working with the starter code and data
+5. **DELETE /applications/:id**
+- Deletes an existing job application by its ID.
+- Validates the ID parameter to ensure it is a positive integer.
+- Checks if the application with the specified ID exists.
+- Returns a JSON response with the deleted application data and a status code of 200 if successful.
+- Returns a JSON response with an error message and a status code of 500 if an error occurs.
 
-Instead of using a real database, your API will read from a JSON object (see `/data/db/jobApplicationsData.json`). When your server starts, this data will be read into memory. Whenever you restart the server, any changes you made to the data will be lost.
+### Notes
 
-You can see in this file that a job application has several properties: `id` (set automatically by the database), `company`, `url` (optional), and `status`. `createdAt` and `updatedAt` are automatically added when a job application is created or updated.
+- The server listens on the port specified by the `PORT` environment variable. If not specified, it defaults to port 9000.
+- CORS errors in the Google Chrome web browser are prevented.
+- The application is organized into controller, query, and middleware layers.
+- Error handling is implemented for various scenarios, including invalid data tupe input, missing data, extra field other than what is required and server errors.
 
-In the file `/queries/jobApplicationsQueries.js` there are already some methods that can create, read, update, or delete the applications in the JSON file. You should understand how these methods work, what they return, and how you'll use them in your code. You should not need to modify them at all.
 
-Notice that the query methods are `async` functions, just like they would have to be if they queried an actual database. **Do not** change them to non-async functions.
+## Markdown Table
 
+| Comment                      | How i fixed it               | How i tested it                                     |
+|------------------------------|------------------------------|-----------------------------------------------------|
+|"if the application doesnt    | -changed middleware          | 1. request GET/applications/300
+|  exist, return a 404, not    |   idExist status from 400 to | 2. expect to recive 404 with the 
+|  a 400."                     |   404.                       |    error message "id param 300 does not exist"      |
+|                              |                              | 3.request PUT/applications/300
+|                              |                              | 4.expect same result.
+|                              |                              | 5.request DELETE/applications/300
+|                              |                              | 6.expect same result.
+|                              |                              |  
+|                              |                              | 
+| "The dotenv package config() | -dotenv package installed and| 1.run npm start.
+|   method should be used to   |  required dotenv config in   | 2.reads from config.env file and runs on port 3003
+|   read any enviroment        |  server.js                   | 3.if port not avialabe then runs on default 9000
+|   variables fromt the .env   |                              |
+|   file."                     |                              |
+|                              |                              |
+|"The put route should check   | -added validation idExist on | 1.request PUT/applications/300
+|  that the application exist  | POST controller.             | 2.expect to recive 404 with the 
+|  before trying to update it."|                              |   error message "id param 300 does not exist"
+|                              |                              |
+|                              |                              |
+|"The update route doesnt have | -added validation validId on | 1.request PUT/applications/abc
+|   validate id param."        | POST controller.             | 2.expect to recive 400 with the 
+|                              |                              |   "id param abc must be positive integer"
+|                              |                              |
+|                              |                              |
+|"The url field is not required| -took out the url field from | 1.request POST/application
+|   but if not present, url:   |  applications_field array.   | 2.when url is not prestent
+|   null should be added to the|  In POST controller added    | 3.expect url with null value
+|   application.The current    |  if url is not present it    | 4.when status is "letsgo"
+|   code returns 400 if url    |  should be null.             | 5.expect to recive 400 with the error
+|   is not present and that    |  Imported applicationstatus  |  message "Invalid status: letsgo.
+|   doesnt match the requirment|  from constants.js and added |  Status must be one of the
+|   Also,the application should|  validStatus middleware to   |  following: CREATED, APPLIED,
+|   validate that status field |  allow status field to only  |  REJECTED, PHONE_SCREEN, ON_SITE,
+|   is one of allowed strings  |  have string from application| RECEIVED_OFFER, OFFER_ACCEPTED,
+|   in constants.js."          |  status which is added in    | OFFER_DECLINED"
+|                              |  POST controller.            |
+|                              |                              |  
+|                              |                              |
+|"Install dependencies using   | -changed readme instruction  | 1.npm install
+|   npm and Start the server   |  with specific command.      | 2.npm start
+|   should give the specific   |   "npm install" and          |
+|   command to run."           |   "npm start"                |                                     |
 
 
