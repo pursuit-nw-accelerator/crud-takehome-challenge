@@ -4,7 +4,7 @@ const  applicationStatuses  = require("../constants")
 const validId = (req, res, next) => {
     const { id } = req.params;
     if(!Number.isInteger(Number(id)) || Number(id) < 1){
-        return res.status(404).json({error: `id param ${id} must be positive integer;`})
+        return res.status(400).json({error: `id param ${id} must be positive integer;`})
     }else {
         next();
     }
@@ -29,12 +29,17 @@ const validInputFields = (req, res, next) => {
     const application = req.body;
 
     for(let field of application_fields){
-        if(!application.hasOwnProperty(field) || typeof application[field] !== "string"){
+        if(typeof application[field] !== "string"){
            return res.status(400).json({error: `${field} field missing or wrong data type, recived ${application[field]}`})
         } 
         if(application[field].length === 0){
             return res.status(400).json({error : `${field} cannot be empty`})
         }
+    }
+
+    // Check for type of "url" field
+    if (application.url && typeof application.url !== "string") {
+        return res.status(400).json({ error: `url field has wrong data type, received ${typeof application.url}` });
     }
     
     for(let field in application){
