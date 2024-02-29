@@ -10,7 +10,10 @@ const {
   deleteApplication,
 } = require("../queries/jobApplicationsQueries");
 
-const { validateFields } = require("../validation/validateFields");
+const {
+  validateNoAdditionalFields,
+  validateRequiredFields,
+} = require("../validation/validateFields");
 
 const { applicationStatuses } = require("../constants");
 
@@ -22,7 +25,7 @@ jobApp.get("/", async (req, res) => {
       return res.status(200).json({ data: getAllApps });
     } else {
       return res
-        .status(404)
+        .status(400)
         .json({ error: "Could not retrieve all applications." });
     }
   } catch (err) {
@@ -35,105 +38,131 @@ jobApp.get("/:id", async (req, res) => {
     const { id } = req.params;
     const escapedId = Number(_.escape(id));
 
-    const getAppById = await getApplicationById(escapedId);
+    if (escapedId < 0) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
 
-    if (getAppById) {
-      return res.status(200).json({ data: getAppById });
-    } else {
+    const checkIfAppExists = await getApplicationById(escapedId);
+
+    if (!checkIfAppExists) {
       return res
         .status(404)
-        .json({ error: `Could not retrieve application with ID: ${id}.` });
+        .json({ error: `Application with ID: ${id} does not exist.` });
     }
+
+    return res.status(200).json({ data: checkIfAppExists });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 });
 
-jobApp.post("/", validateFields, async (req, res) => {
-  try {
-    const appData = {
-      company: req.body.company,
-      url: req.body.url || null,
-      status: req.body.status,
-    };
+jobApp.post(
+  "/",
+  validateNoAdditionalFields,
+  validateRequiredFields,
+  async (req, res) => {
+    try {
+      const appData = {
+        company: req.body.company,
+        url: req.body.url || null,
+        status: req.body.status,
+      };
 
-    const statusValues = Object.values(applicationStatuses);
+      const statusValues = Object.values(applicationStatuses);
 
-    const correctStatus = statusValues.some(
-      (status) => appData.status.toLowerCase() === status.toLowerCase()
-    );
+      const correctStatus = statusValues.some(
+        (status) => appData.status.toLowerCase() === status.toLowerCase()
+      );
 
-    if (!correctStatus) {
-      return res.status(400).json({
-        error:
-          "Please input one of the correct statuses: CREATED, APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
-      });
+      if (!correctStatus) {
+        return res.status(400).json({
+          error:
+            "Please input one of the correct statuses: CREATED, APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
+        });
+      }
+
+      const createApp = await createApplication(appData);
+
+      if (createApp) {
+        return res.status(201).json({ data: createApp });
+      } else {
+        return res.status(400).json({ error: "Could not create application." });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
     }
-
-    const createApp = await createApplication(appData);
-
-    if (createApp) {
-      return res.status(201).json({ data: createApp });
-    } else {
-      return res.status(404).json({ error: "Could not create application." });
-    }
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
   }
-});
+);
 
-jobApp.put("/:id", validateFields, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const escapedId = Number(_.escape(id));
+jobApp.put(
+  "/:id",
+  validateNoAdditionalFields,
+  validateRequiredFields,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const escapedId = Number(_.escape(id));
 
-    const updatedAppData = {
-      company: req.body.company,
-      url: req.body.url || null,
-      status: req.body.status,
-    };
+      if (escapedId < 0) {
+        return res.status(400).json({ error: "Invalid ID." });
+      }
 
-    const statusValues = Object.values(applicationStatuses);
+      const checkIfAppExists = await getApplicationById(escapedId);
 
-    const correctStatus = statusValues.some(
-      (status) => appData.status.toLowerCase() === status.toLowerCase()
-    );
+      if (!checkIfAppExists) {
+        return res
+          .status(404)
+          .json({ error: `Application with ID: ${id} does not exist.` });
+      }
 
-    if (!correctStatus) {
-      return res.status(400).json({
-        error:
-          "Please input one of the correct statuses: CREATED, APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
-      });
-    }
+      const updatedAppData = {
+        company: req.body.company,
+        url: req.body.url || null,
+        status: req.body.status,
+      };
 
-    const updateApp = await updateApplication(escapedId, updatedAppData);
+      const statusValues = Object.values(applicationStatuses);
 
-    if (updateApp) {
+      const correctStatus = statusValues.some(
+        (status) => updatedAppData.status.toLowerCase() === status.toLowerCase()
+      );
+
+      if (!correctStatus) {
+        return res.status(400).json({
+          error:
+            "Please input one of the correct statuses: CREATED, APPLIED, REJECTED, PHONE_SCREEN, ON_SITE, RECEIVED_OFFER, OFFER_ACCEPTED, OFFER_DECLINED",
+        });
+      }
+
+      const updateApp = await updateApplication(escapedId, updatedAppData);
+
       return res.status(201).json({ data: updateApp });
-    } else {
-      return res
-        .status(404)
-        .json({ error: `Could not update application with ID: ${id}.` });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
     }
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
   }
-});
+);
 
 jobApp.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const escapedId = Number(_.escape(id));
 
-    const deleteApp = await deleteApplication(escapedId);
+    if (escapedId < 0) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
 
-    if (deleteApp) {
-      return res.status(200).json({ data: deleteApp });
-    } else {
+    const checkIfAppExists = await getApplicationById(escapedId);
+
+    if (!checkIfAppExists) {
       return res
         .status(404)
-        .json({ error: `Could not delete application with ID: ${id}.` });
+        .json({ error: `Application with ID: ${id} does not exist.` });
     }
+
+    const deleteApp = await deleteApplication(escapedId);
+
+    return res.status(200).json({ data: deleteApp });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
