@@ -14,7 +14,7 @@ deleteApplication } = require('../queries/jobApplicationsQueries')
 const {
     checkId,
     checkClientsInput
-} = require('../validations/CheckJobApplications')
+} = require('../validations/checkJobApplications')
 
 //INDEX
 applications.get("/", async (req, res) => {
@@ -53,15 +53,15 @@ applications.get("/:id", checkId, async (req, res) => {
 // CREATE (POST)
 applications.post("/", checkClientsInput, async (req, res) => {
     try{ 
-        const newApplication = req.body
-        const application = await createApplication(newApplication)
-        if(application)
-            res.status(200).json({data: application})
+        const application = req.body
+        const newApplication = await createApplication(application)
+        res.status(200).json({data: newApplication})
     } catch(error) {
-            res.status(500).json({error: error.message})
+        res.status(500).json({error: error.message})
     }
 })
 // UPDATE (PUT)
+
 //DELETE
 
 

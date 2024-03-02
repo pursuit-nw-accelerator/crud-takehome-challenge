@@ -1,16 +1,16 @@
 //VALIDATIONS
 const {applicationStatuses} = require('../constants.js')
 
-    const checkId = (id, response) => {
+    const checkId = (req, res, next) => {
         const { id } = req.params
         console.log(id)
         //if the id is not a number or doesn't exist
-        if(!Number.isInteger(Number(id)) || !Number(id)){
+        if(!Number.isInteger(Number(id)) || Number(id) < 1){
         //return 400 status code
-        response.status(400).json({error: `Id must exist and be a positive integer; Id received: ${id}`})
-        return false
+        response.status(400).json({error: `Id:${id} must be a positive integer`})
+        } else{
+            next()
         }
-        return true
     }
 
     const checkClientsInput = (req, res, next) => {
