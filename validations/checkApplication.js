@@ -2,20 +2,22 @@ const applicationStatus = require("../constants");
 
 const validKeys = (app) => {
   const appKeys = ["company", "url", "status"];
+  const invalidKeys = [];
   for (let key in app) {
     if (!appKeys.includes(key)) {
-      return false;
+      invalidKeys.push(key);
     }
   }
-  return true;
+  return invalidKeys;
 }
 
 const checkKeys = (req, res, next) => {
-  if (validKeys(req.body)) {
+  const invalidKeys = validKeys(req.body);
+  if (!invalidKeys.length) {
     next();
   }
   else {
-    res.status(400).json({ error: "Invalid data!" });
+    res.status(400).json({ error: `Following field(s) are not allowed '${invalidKeys.join(', ')}'` });
   }
 };
 
@@ -34,7 +36,7 @@ const checkStatus = (req, res, next) => {
     next();
   }
   else if (app.status) {
-    res.status(400).json({ error: "Status is not valid!" });
+    res.status(400).json({ error: `Status with value of '${app.status}' is not valid!` });
   }
   else {
     res.status(400).json({ error: "Status is required!" });
