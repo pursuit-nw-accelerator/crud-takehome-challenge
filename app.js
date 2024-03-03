@@ -9,6 +9,9 @@ const app = express();
 // TODO: Add application-wide middleware
 require("dotenv").config
 app.use(cors());
+// body parsing middleware to parse incoming request bodies else req.body is undefined
+app.use(express.json())
+
 
 //CONTROLLERS
 const jobsControllers = require("./controllers/jobApplicationController")

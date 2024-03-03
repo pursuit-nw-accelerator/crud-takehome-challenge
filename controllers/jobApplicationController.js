@@ -62,9 +62,27 @@ applications.post("/", checkClientsInput, checkStatuses, async (req, res) => {
     }
 })
 // UPDATE (PUT)
+applications.put("/:id", checkClientsInput, checkStatuses, checkId, async (req, res) => {
+    try{
+        const { id } = req.params
+        const application = req.body
+        const updatedApplication = await updateApplication(Number(id), application)
+        res.status(200).json({data: updatedApplication})
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+})
 
 //DELETE
-
+applications.delete("/:id", checkId, async (req, res) => {
+    try{
+        const { id } = req.params
+        const deletedApplication = await deleteApplication(Number(id))
+        res.status(200).json({data: deletedApplication})
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+})
 
 module.exports = applications
 /*                             WORKS CITED

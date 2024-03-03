@@ -22,12 +22,12 @@ Submissions must be posted as a PR by the deadline. Extensions will not be accep
 
 ## <a id="user-stories"></a> User stories
 As a client, I should be able to:
-1. Know if the API is up and running by visiting a health check route.
-1. See all the job applications I have created.
-1. See a specific job application, requested by its id.
-1. Create a new job application.
-1. Update / change an existing job application.
-1. Delete an existing job application.
+1. Know if the API is up and running by visiting a health check route. - done
+1. See all the job applications I have created. - done
+1. See a specific job application, requested by its id. - done
+1. Create a new job application. - done
+1. Update / change an existing job application. -DONE
+1. Delete an existing job application. - DONE
 
 ## <a id="other-requirements"></a> Other requirements
 1. Your API should not cause CORS errors in the Google Chrome web browser.
@@ -39,8 +39,8 @@ As a client, I should be able to:
 1. When your server starts, it should listen on a port specified by the `PORT` environment variable. If there is no environment variable, it should listen on port 9000 as a default.
 1. Catch all server errors and return the appropriate status code. Do not swallow any errors or error messages.
 1. Return the correct error and status code if the application the client wants to read, update, or delete is not found.
-1. When a route includes an `id` param, validate that the id can be parsed as a positive integer. Return the correct status code and message if the id is not valid.
-1. When creating or updating an application, validate the client's input. Return the correct status code if it's not valid.
+1. When a route includes an `id` param, validate that the id can be parsed as a positive integer. Return the correct status code and message if the id is not valid. -DONE
+1. When creating or updating an application, validate the client's input. Return the correct status code if it's not valid. -DONE
     - There must be a company and status
     - The status must be one of the statuses listed in `constants.js`
     - The url field is optional, but should have a `null` value if it isn't present.
