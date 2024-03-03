@@ -5,7 +5,7 @@
 
 # **Installation**
 
-1.  Clone the repository:   git clone <repository URL>
+1.  Clone the repository:   git clone [<repository URL>](https://github.com/pursuit-nw-accelerator/crud-takehome-challenge.git)
 2.  Navigate to the crud-takehome-challenge: type 'cd crud-takehome-challenge' in the terminal
 3.  Install the back-end dependencies:  type 'npm install' in the terminal
 4.  Open the code editor by typing in the terminal 'code .'
