@@ -33,10 +33,7 @@ jobs.post('/', validateApp, async (req, res) => {
     try{
         const createdJob = await createApplication(req.body);
         if (createdJob){
-            res.status(200).json({data: createdJob})
-        }
-        else{
-            res.status(404).json({error: "Could not be created"})
+            res.status(201).json({data: createdJob})
         }
     }catch(error){
         res.status(500).json({error: error.message})
