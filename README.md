@@ -9,7 +9,7 @@ Imagine you are a software engineer applying for your first job. Here is a backe
 1. Install dependencies with `npm install`.
 1. Start the server by running `nodemon server.js` or `npm start` in your terminal.
 1. Commit and push your code as you go, ideally one commit per user story or requirement.
-1. Check for the `{"data":"Hello World"}` success message at `http://localhost:9000`.
+1. Check for the `{"data":"Hello World"}` success message at `http://localhost:9000` or your desired env port value.
 
 
 ## <a id="methods-routes"></a>Methods & Routes
