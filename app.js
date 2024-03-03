@@ -14,7 +14,7 @@ app.use('/applications', jobApplicationsRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
-    res.send('Health Check OK');
+    res.send('Hello World');
 });
 
 module.exports = app;

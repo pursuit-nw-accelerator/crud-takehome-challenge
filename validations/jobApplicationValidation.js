@@ -1,29 +1,25 @@
-//validate job App
+// Validate job application
+const validateJobApplication = (data) => {
 
-const validateJobApplication = (id, data) => {
-    //check if id is a valid number
-    if(isNaN(id) || id <= 0) {
-        return { error: 'Invalid ID provided'};
+    if (!data || typeof data !== 'object') {
+        return { error: 'Validation failed: Invalid data format' };
     }
 
-    //validate data
-    const { company, url, createdAt, status, updatedAt } = data;
-    if(!company ) {
-        return { error: error.message }
+    // Validate data fields
+    const { company, url, status } = data;
+    if (!company || !url || !status) {
+        return { error: 'Validation failed: Missing or invalid data fields' };
     }
-    if(!url){
-        return {error: error.message}
-    }
-    if(isNaN(Date.parse(createdAt)) || isNaN(Date.parse(updatedAt))) {
-        return {error: error.message}
-    }
-    const validStatus = ['APPLIED', 'CREATED', 'REJECTED', 'PHONE_SCREEN', 'ON_SITE', 'RECEIVED_OFFER', 'OFFER_ACCEPTED', 'OFFER_DECLINED']
-    if(!validStatus.includes(status)) {
-        return { error: error.message}
-    }
-    return null
-}
 
+    // Validate status field
+    const validStatus = ['APPLIED', 'CREATED', 'REJECTED', 'PHONE_SCREEN', 'ON_SITE', 'RECEIVED_OFFER', 'OFFER_ACCEPTED', 'OFFER_DECLINED'];
+    if (!validStatus.includes(status)) {
+        return { error: 'Validation failed: Invalid status value' };
+    }
+
+    return null;
+};
+let status = Object.values()
 module.exports = {
     validateJobApplication
-}
+};
