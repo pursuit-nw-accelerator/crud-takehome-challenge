@@ -1,4 +1,5 @@
 const app = require('./app');
+require('dotenv').config();
 
 // TODO: Read the port from environment variables,
 // or use 9000 as a default
