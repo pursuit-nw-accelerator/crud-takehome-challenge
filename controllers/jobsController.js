@@ -108,6 +108,9 @@ const deleteJobApplication = async (req, res) => {
 };
 
 module.exports = {
+    getJobApplications,
+    getJobApplicationById,
+    createJobApplication,
+    updateJobApplication,
     deleteJobApplication
-};
-
+}
