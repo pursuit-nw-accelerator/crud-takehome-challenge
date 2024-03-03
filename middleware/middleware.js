@@ -1,9 +1,10 @@
-const  {getApplicationById } = require("../queries/jobApplicationsQueries");
+const { getApplicationById } = require("../queries/jobApplicationsQueries");
 const applicationStatuses = require("../constants.js");
 
 
 const JOB_APP_FIELDS = [
     "company",
+    "url",
     "status",
 ];
 
@@ -11,20 +12,20 @@ const validateIdMiddleware = (request, response, next) => {
     // If id  !valid, return 400 and stop
     const { id } = request.params;
     if (!Number.isInteger(Number(id)) || Number(id) < 1) {
-      return response
-        .status(400)
-        .json({ error: `The id must be a positive integer; received ${id}` });
+        return response
+            .status(400)
+            .json({ error: `The id must be a positive integer; received ${id}` });
     } else {
-      // Else "annotate" request with parsed id as number and call next
-      request.id = Number(id);
-      next();
+        // Else "annotate" request with parsed id as number and call next
+        request.id = Number(id);
+        next();
     }
-  };
+};
 
-  const validateJobAppMiddleware = (request, response, next) => {
+const validateJobAppMiddleware = (request, response, next) => {
     const jobApplication = request.body;
 
-    // Validate status field
+
     if (
         !jobApplication.hasOwnProperty("status") ||
         !Object.values(applicationStatuses).includes(jobApplication["status"])
@@ -34,8 +35,20 @@ const validateIdMiddleware = (request, response, next) => {
         });
     }
 
+    // Set the url field to null if it's an empty string or null
+    if (jobApplication.url === "") {
+        jobApplication.url = null;
+    }
+
+
     // Each of JOB_APP_FIELDS must be present and must be a string and not an empty string.
     for (const field of JOB_APP_FIELDS) {
+        // Skip the "url" field for JOB_APP_FIELDS check
+        if (field === "url") {
+            continue;
+        }
+
+
         // return false if field is not a key in jobApplications, or if the value is not a string
         if (!jobApplication.hasOwnProperty(field) || typeof jobApplication[field] !== "string" || jobApplication[field].trim() === "") {
             return response.status(400).json({
@@ -62,19 +75,19 @@ const validatejobAppExistsMiddleware = async (request, response, next) => {
     const { id } = request; // assumes this is called AFTER validateIdMiddleware
     const jobApplications = await getApplicationById(id);
     if (!jobApplications) {
-      return response
-        .status(404)
-        .json({ error: `Cannot find jobApplication with id ${id}` });
+        return response
+            .status(404)
+            .json({ error: `Cannot find jobApplication with id ${id}` });
     }
     request.jobApplications = jobApplications;
     next();
-  };
-  
-  module.exports = {
+};
+
+module.exports = {
     validateIdMiddleware,
     validateJobAppMiddleware,
     validatejobAppExistsMiddleware,
-  };
+};
 
 
 
