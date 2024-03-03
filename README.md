@@ -14,12 +14,12 @@ Imagine you are a software engineer applying for your first job. Here is a backe
 
 ## <a id="methods-routes"></a>Methods & Routes
 1. **GET (ALL) /applications**
--- Gets all applications stored in the json database
+- Gets all applications stored in the json database
 1. **GET (ONE) /applications/:id**
--- Gets one application from the database based on the specified Id in the req.paramater
+- Gets one application from the database based on the specified Id in the req.paramater
 1. **POST applications**
--- Creates a new application and adds it to the json body of applications
+- Creates a new application and adds it to the json body of applications
 1. **PUT /applications/:id**
--- Updates an existing application
+- Updates an existing application
 1. **DELETE /applications/:id**
--- Deletes an existing application
+- Deletes an existing application
