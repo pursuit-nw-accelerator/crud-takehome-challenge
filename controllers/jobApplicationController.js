@@ -13,7 +13,8 @@ deleteApplication } = require('../queries/jobApplicationsQueries')
 
 const {
     checkId,
-    checkClientsInput
+    checkClientsInput,
+    checkStatuses
 } = require('../validations/checkJobApplications')
 
 //INDEX
@@ -51,7 +52,7 @@ applications.get("/:id", checkId, async (req, res) => {
 1. When creating or updating an application, validate the client's input. Return the correct status code if it's not valid.
  */
 // CREATE (POST)
-applications.post("/", checkClientsInput, async (req, res) => {
+applications.post("/", checkClientsInput, checkStatuses, async (req, res) => {
     try{ 
         const application = req.body
         const newApplication = await createApplication(application)
