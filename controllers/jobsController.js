@@ -13,7 +13,7 @@ jobs.get('/', async (req, res) => {
             res.status(404).json({ error: "No jobs found" })
         }
     }catch(error){
-        res.status(500).json({error: "Server Error"})
+        res.status(500).json({error: error.message})
     }
 })
 jobs.get('/:id', validateId, async (req, res) => { 
@@ -26,7 +26,7 @@ jobs.get('/:id', validateId, async (req, res) => {
             res.status(404).json({error: "Job not found"})
         }
     }catch(error){
-        res.status(500).json({error: "Server Error"})
+        res.status(500).json({error: error.message})
     }
 })
 jobs.post('/', validateApp, async (req, res) => {
@@ -39,7 +39,7 @@ jobs.post('/', validateApp, async (req, res) => {
             res.status(404).json({error: "Could not be created"})
         }
     }catch(error){
-        res.status(500).json({error: "Server Error"})
+        res.status(500).json({error: error.message})
     }
 })
 
@@ -52,7 +52,7 @@ jobs.delete('/:id', validateId, async (req, res) => {
         }
         res.status(200).json({data: deleteJob})
     }catch(error){
-        res.status(500).json({error: "Server Error"})
+        res.status(500).json({error: error.message})
     }
 })
 jobs.put('/:id', validateId, validateApp, async (req, res) => {
@@ -65,7 +65,7 @@ jobs.put('/:id', validateId, validateApp, async (req, res) => {
             res.status(404).json({error: "Updating failed"})
         }
     }catch(error){
-        res.status(500).json({error: "Server Error"})
+        res.status(500).json({error: error.message})
     }
 })
 
