@@ -1,9 +1,10 @@
 # SARAI'S JOB APPLICATION THEMED CRUD TAKEHOME CHALLENGE
-## Completed By Sarai Thomas
+
+### Completed By Sarai Thomas
 
 Imagine you are a software engineer applying for your first job. Here is a backend database so you can keep track of the jobs you apply for and their current status.
 
-### <a id="instructions-to-run-server-locally"></a>Instructions to Run the Server Locally
+## <a id="instructions-to-run-server-locally"></a>Instructions to Run the Server Locally
 1. Clone the repository.
 1. Install dependencies with `npm install`.
 1. Start the server by running `nodemon server.js` or `npm start` in your terminal.
