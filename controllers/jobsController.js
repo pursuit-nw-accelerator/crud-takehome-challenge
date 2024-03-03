@@ -43,15 +43,16 @@ jobs.post('/', validateApp, async (req, res) => {
 jobs.delete('/:id', validateId, async (req, res) => { 
     const { id } = req.params;
     try{
-        const deleteJob = await deleteApplication(id)
+        const deleteJob = await deleteApplication(Number(id))
         if(!deleteJob){
-            res.status(404).json({error: "Could not delete because it was not found"})
+            return res.status(404).json({error: `Could not delete because ${id} does not exist`})
         }
         res.status(200).json({data: deleteJob})
     }catch(error){
         res.status(500).json({error: error.message})
     }
 })
+
 jobs.put('/:id', validateId, validateApp, async (req, res) => {
     const { id } = req.params;
     try{
