@@ -19,7 +19,7 @@ const validateJobApplication = (data) => {
 
     return null;
 };
-let status = Object.values()
+
 module.exports = {
     validateJobApplication
 };

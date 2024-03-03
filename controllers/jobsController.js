@@ -111,16 +111,3 @@ module.exports = {
     deleteJobApplication
 };
 
-
-
-
-
-
-
-module.exports = {
-    getJobApplications,
-    getJobApplicationById,
-    createJobApplication,
-    updateJobApplication,
-    deleteJobApplication
-}
