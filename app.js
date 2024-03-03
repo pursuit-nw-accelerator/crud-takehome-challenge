@@ -14,11 +14,11 @@ app.use('/jobs', jobsController)
 // TODO: Implement health check route
 
 app.get('/', (req, res) => {
-    res.status(200).json({message: "Server working!"})
+    res.status(200).json({data: "Server working!"})
 })
 
 app.get('*', (req, res) => {
-    res.status(404).json({message: `path name ${req.url} does not exist`})
+    res.status(404).json({data: `path name ${req.url} does not exist`})
 })
 
 module.exports = app;
