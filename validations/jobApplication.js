@@ -30,7 +30,8 @@ const newJobApplication = (req, res, next) => {
 
 const queryId = (req, res, next) => {
   let { id } = req.params;
-  if (!Number.isInteger(Number(id)) && id >= 0) {
+
+  if (!Number.isInteger(Number(id)) || id < 0) {
     res.status(400).json(returnError("id not vaild."));
     return;
   }
