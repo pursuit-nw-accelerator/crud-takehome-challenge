@@ -1,12 +1,20 @@
+// app.js
 const express = require('express');
+const cors = require('cors');
+const jobApplicationsRoutes = require('./routes/jobApplicationsRoutes');
 
 const app = express();
 
-// TODO: Add application-wide middleware
+// Middleware
+app.use(express.json());
 app.use(cors());
 
-// TODO: Add controller(s)
+// Routes
+app.use('/applications', jobApplicationsRoutes);
 
-// TODO: Implement health check route
+// Health check route
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
 
 module.exports = app;
