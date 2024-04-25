@@ -13,6 +13,16 @@ You should use only your own code. Do not use ChatGPT or generative AI, and do n
 1. Write code to implement the [user stories](#user-stories) and [other requirements](#other-requirements) below.
 1. Commit and push your code as you go, ideally one commit per user story or requirement.
 
+## Planning
+Before you start writing code, read the requirements carefully. Then create a table with 3 columns like the one below. For each requirement write down **how you'll test that it works correctly** and **how you'll build the feature**. The plan to build can be general but the steps to test it should be a **specific numbered list** of actions that a user can do (with Postman) and results they can see.
+
+|Requirement|How to test|How to build|
+|----|----|----|
+|Health check route|1. Visit '/' in Postman.<br />2. I should see `{ "data": "Service is running" } <br/> 3. The status code should be 200 <br /> 4. The response should be in JSON.|// your plan here|
+|See all applications|1. Visit '/applications' in Postman ...| // your plan here|
+
+You can create your table in a google doc or google sheet. **You must include a link to the table in the README of your takehome.** If you do not do this, I will not give feedback on your work.
+
 ## Submitting
 When you have completed ALL the [user stories](#user-stories) and [other requirements](#other-requirements) EXACTLY, push all your code to GitHub and open a PR against the upstream repo. (This should be a PR against the repo owned by the `pursuit-nw-accelerator` org, not a PR against your own repo.)
 
