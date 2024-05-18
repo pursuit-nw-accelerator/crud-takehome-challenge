@@ -1,4 +1,5 @@
 const express = require('express');
+const applicationsController = require('./controllers/applicationControllers.js');
 
 const app = express();
 
@@ -6,6 +7,7 @@ const app = express();
 app.use(cors());
 
 // TODO: Add controller(s)
+app.use('/applications', applicationsController);
 
 // TODO: Implement health check route
 
