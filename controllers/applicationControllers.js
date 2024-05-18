@@ -6,6 +6,7 @@ const {
     updateApplication,
     deleteApplication,
   } = require('../queries/jobApplicationsQueries.js');
+const { intChecker, propChecker, bodyChecker } = require('../middlewares/middlewares.js');
 
 const applicationsController = Router();
 
@@ -14,22 +15,22 @@ applicationsController.get('/', async (req, res) => {
     return res.status(200).json({ data : applications });
 });
 
-applicationsController.get('/:id', async (req, res) => {
+applicationsController.get('/:id', intChecker, async (req, res) => {
     const application = getApplicationById(parseInt(req.params.id));
     return res.status(200).json({ data : application});
 })
 
-applicationsController.post('/', async (req, res) => {
+applicationsController.post('/', propChecker, bodyChecker,async (req, res) => {
     const application = await createApplication(req.body);
     return res.status(201).json({data : application})
 
 });
-applicationsController.put('/:id', async (req, res) => {
+applicationsController.put('/:id', intChecker, bodyChecker, async (req, res) => {
     const application = await updateApplication(parseInt(req.params.id), req.body);
     return res.status(200).json({data: application})
     
 });
-applicationsController.delete('/:id', async (req, res) => {
+applicationsController.delete('/:id', intChecker, async (req, res) => {
     const application = await deleteApplication(parseInt(req.params.id));
     return res.status(204).json({data: student})
 });
