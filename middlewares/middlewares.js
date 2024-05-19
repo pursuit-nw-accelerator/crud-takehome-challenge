@@ -7,6 +7,7 @@
 */
 const fs = require('node:fs');
 const FILE = '../db/data/jobApplicationsData.json';
+const applicationStatuses = require('../constants.js');
 
 const propChecker = (req, res, next) => {
     if(!req.body["company"] || !req.body["status"]){
@@ -27,6 +28,25 @@ const bodyChecker = (req, res, next) => {
     if(!req.body){
         return res.status(401).json({error: "missing body"});
     }
+
+    if(!req.body.company){
+        return res.status(401).json({error: "company field must be filled"});
+    }
+
+    if(!applicationStatuses[req.body.status]){
+        return res.status(401).json({error: "wrong value was typed on the status."})
+    }
+
+    if(req.body.id || req.body.createdAt || req.body.updatedAt){
+        return res.status(401).json({error: "unauthorized access is detected"});
+    }
+
+    for(let property in req.body){
+        if(property !== 'company' || property !== 'url' || property !== 'status'){
+            return res.status(401).json({error: "unauthorized access is detected"});
+        }
+    }
+
     next();
 }
 

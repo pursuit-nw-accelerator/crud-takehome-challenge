@@ -11,8 +11,12 @@ app.use(cors());
 app.use('/applications', applicationsController);
 
 // TODO: Implement health check route
-app.use('/', dbChecker, (req, res) => {
+app.get('/', dbChecker, (req, res) => {
     return res.status(200).json({data: 'The server is ON'});
 });
+
+app.get('*', (req, res) => {
+    return res.status(404).json({error: 'the route cannot be found'});
+})
 
 module.exports = app;
