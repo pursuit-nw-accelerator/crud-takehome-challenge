@@ -15,6 +15,7 @@ You should use only your own code. Do not use ChatGPT or generative AI, and do n
 
 ## Planning
 [Shanice CRUD Planner](https://docs.google.com/document/d/1RSi6CsP2KtM92TpO-kkbwVgXWlqXF-riq329UCuxgJU/edit?usp=sharing)
+
 Before you start writing code, read the requirements carefully. Then create a table with 3 columns like the one below. For each requirement write down **how you'll test that it works correctly** and **how you'll build the feature**. The plan to build can be general but the steps to test it should be a **specific numbered list** of actions that a user can do (with Postman) and results they can see.
 
 |Requirement|How to test|How to build|
