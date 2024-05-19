@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require("cors");
 const app = express();
-const applicationsController = require("./controllers/applicationController")
+const applicationsController = require("./controllers/applicationsController")
 
 // TODO: Add application-wide middleware
 app.use(cors());
