@@ -33,19 +33,25 @@ const bodyChecker = (req, res, next) => {
 const dbChecker = (req, res, next) => {
     let errFlag = false;
     let errMsg = "";
-
+    let errStatus = 500;
     fs.access(FILE, (err) => {
         if(err){
+            errFlag = true;
             if(err.code === 'ENOENT'){
-                errFlag = true;
                 errMsg = "db cannot be found";
+                errStatus = 503;
                 return;
             } /** ENOENT chk */
+            else {
+                errMsg = "something wrong in the db";
+                errStatus = 500;
+                return;
+            }
         } /** end of 1st if */
     }) /** end of readFile */
 
     if(errFlag){
-        return res.status(500).json({error: errMsg});
+        return res.status(errStatus).json({error: errMsg});
     } else {
         next();
     }
