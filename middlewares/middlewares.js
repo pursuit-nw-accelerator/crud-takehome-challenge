@@ -7,7 +7,7 @@
 */
 const propChecker = (req, res, next) => {
     if(!req.body["company"] || !req.body["status"]){
-        return res.status(400).json({error:"missing parameters"});
+        return res.status(401).json({error:"missing parameters"});
     } else {
         next();
     }
@@ -15,14 +15,14 @@ const propChecker = (req, res, next) => {
 
 const intChecker = (req, res, next) => {
     if(!/^[0-9]*$/.test(req.params.id)){
-        return res.status(400).json({error : "id must be a valid numeric" });
+        return res.status(401).json({error : "id must be a valid numeric" });
     }
     next();
 }
 
 const bodyChecker = (req, res, next) => {
     if(!req.body){
-        return res.status(400).json({error: "missing body"});
+        return res.status(401).json({error: "missing body"});
     }
     next();
 }

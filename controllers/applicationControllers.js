@@ -11,29 +11,53 @@ const { intChecker, propChecker, bodyChecker } = require('../middlewares/middlew
 const applicationsController = Router();
 
 applicationsController.get('/', async (req, res) => {
-    const applications = await getAllApplications();
-    return res.status(200).json({ data : applications });
+    try{
+        const applications = await getAllApplications();
+        return res.status(200).json({ data : applications });
+    } catch(err) {
+        return res.status(400).json({ error: err });
+    }
 });
 
 applicationsController.get('/:id', intChecker, async (req, res) => {
-    const application = getApplicationById(parseInt(req.params.id));
-    return res.status(200).json({ data : application});
+    try{
+        const application = getApplicationById(parseInt(req.params.id));
+        return res.status(200).json({ data : application});
+    } catch(err){
+        return res.status(400).json({ error: err });
+    }
 })
 
 applicationsController.post('/', propChecker, bodyChecker,async (req, res) => {
-    const application = await createApplication(req.body);
-    return res.status(201).json({data : application})
+    try{
+        const application = await createApplication(req.body);
+        return res.status(201).json({data : application})
+    } catch(err){
+        return res.status(400).json({ error: err });
+    }
 
 });
 applicationsController.put('/:id', intChecker, bodyChecker, async (req, res) => {
-    const application = await updateApplication(parseInt(req.params.id), req.body);
-    return res.status(200).json({data: application})
+    try{
+        const application = await updateApplication(parseInt(req.params.id), req.body);
+        return res.status(200).json({data: application})
+    } catch(err){
+        return res.status(400).json({ error: err });
+    }
     
 });
 applicationsController.delete('/:id', intChecker, async (req, res) => {
-    const application = await deleteApplication(parseInt(req.params.id));
-    return res.status(204).json({data: student})
+    try{
+        const application = await deleteApplication(parseInt(req.params.id));
+        return res.status(204).json({data: student})
+    } catch(err){
+        return res.status(400).json({ error: err });
+    }
 });
 applicationsController.get('*', async (req, res) => {
-    return res.status(404).json({error: ''})
+    try{
+        return res.status(404).json({error: ''})
+    } catch(err){
+        return res.status(400).json({ error: err });
+    }
 });
