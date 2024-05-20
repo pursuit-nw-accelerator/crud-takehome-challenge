@@ -11,7 +11,9 @@ const {
 
 
 // TODO: Add application-wide middleware
+const app = express();
 app.use(cors());
+app.use(express.json());
 
 // TODO: Add controller(s)
 
