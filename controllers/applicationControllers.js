@@ -75,7 +75,7 @@ applicationsController.delete('/:id', intChecker, async (req, res) => {
         const application = await deleteApplication(parseInt(req.params.id));
         console.log(application)
         if(application){
-            return res.status(200).json({data: application})
+            return res.status(200).json({delete: application})
         } else {
             return res.status(400).json({error: `${req.params.id} does not exist in the database`})
         }
