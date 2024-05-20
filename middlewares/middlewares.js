@@ -1,6 +1,12 @@
 const fs = require('node:fs');
 const FILE = '../db/data/jobApplicationsData.json';
 const applicationStatuses = require('../constants.js');
+const {
+    getApplicationById,
+    createApplication,
+    deleteApplication,
+    updateApplication,
+  } = require('../queries/jobApplicationsQueries.js');
 
 /**************************************
  * intChecker()
@@ -54,10 +60,10 @@ const bodyChecker = (req, res, next) => {
         } else {
             return res.status(401).json({error: "missing required parameters"});
         }
-    }
+    } /** end of for loop */
 
     next();
-}
+} /** end of bodyChecker() */
 
 /**************************************
  * dbChecker()
@@ -97,8 +103,46 @@ const dbChecker = (req, res, next) => {
     }
 } /** end of dbChecker */
 
+/**************************************
+ * crudChecker()
+ * ====================================
+ * @param {Object} req - 
+ * @param {Object} res - 
+ * @param {function} next - 
+ * 
+ * middleware to check CRUD functionality by create/read/delete a data to db.
+ * 
+ */
+const crudChecker = async (req, res, next) => {
+    /** test CREATE */
+    const create = await createApplication({company: "test", status: "APPROVED"});
+    if(!create){
+        return res.status(500).json({error: "cannot POST to db"});
+    }
+
+    /** test UPDATE */
+    const updatedApp = await updateApplication(parseInt(create.id), {company: "test", status: "REJECTED"});
+    if(!updatedApp){
+        return res.status(500).json({error: "cannot PUT to db"});
+    }
+
+    /** test READ */
+    const application = await getApplicationById(parseInt(create.id));
+    if(!application){
+        return res.status(500).json({error: "cannot GET to db"});
+    }
+
+    /** test DELETE */
+    const deletedApp = await deleteApplication(parseInt(application.id))
+    if(!deletedApp){
+        return res.status(500).json({error: "cannot DELETE to db"});
+    }
+    next();
+} /** end of crudChecker() */
+
 module.exports = {
     intChecker,
     bodyChecker,
     dbChecker,
+    crudChecker,
 }
