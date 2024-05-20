@@ -66,21 +66,23 @@ applicationsController.put('/:id', intChecker, bodyChecker, async (req, res) => 
         }
     } catch(err){
         console.log(err)
-        return res.status(500).json({ error: `internal server error` });    }
+        return res.status(500).json({ error: `internal server error` });
+    }
     
 });
 applicationsController.delete('/:id', intChecker, async (req, res) => {
     try{
         const application = await deleteApplication(parseInt(req.params.id));
-
+        console.log(application)
         if(application){
-            return res.status(204).json({data: student})
+            return res.status(204).json({data: application})
         } else {
             return res.status(400).json({error: `${req.params.id} does not exist in the database`})
         }
     } catch(err){
         console.log(err)
-        return res.status(500).json({ error: `internal server error` });    }
+        return res.status(500).json({ error: `internal server error` });
+    }
 });
 applicationsController.get('*', (req, res) => {
     try{
