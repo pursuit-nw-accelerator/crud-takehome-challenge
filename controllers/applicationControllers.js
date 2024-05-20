@@ -6,7 +6,7 @@ const {
     updateApplication,
     deleteApplication,
   } = require('../queries/jobApplicationsQueries.js');
-const { intChecker, propChecker, bodyChecker } = require('../middlewares/middlewares.js');
+const { intChecker, bodyChecker } = require('../middlewares/middlewares.js');
 
 const applicationsController = Router();
 
@@ -41,7 +41,7 @@ applicationsController.get('/:id', intChecker, async (req, res) => {
     }
 })
 
-applicationsController.post('/', propChecker, bodyChecker, async (req, res) => {
+applicationsController.post('/', bodyChecker, async (req, res) => {
     try{
         const application = await createApplication(req.body);
 

@@ -3,25 +3,6 @@ const FILE = '../db/data/jobApplicationsData.json';
 const applicationStatuses = require('../constants.js');
 
 /**************************************
- * propChecker()
- * ===================================
- * @param {Object} req - 
- * @param {Object} res - 
- * @param {function} next - 
- * 
- * a middleware to check the body block from a request.
- * "company" and "status" must exist, and any other property besides "url" must be omitted.
- * should b merged to bodyChecker()
- */
-const propChecker = (req, res, next) => {
-    if(!req.body["company"] || !req.body["status"]){
-        return res.status(401).json({error:"missing parameters"});
-    } else {
-        next();
-    }
-}
-
-/**************************************
  * intChecker()
  * ===================================
  * @param {Object} req - 
@@ -66,8 +47,12 @@ const bodyChecker = (req, res, next) => {
     }
 
     for(let property in req.body){
-        if(property !== 'company' || property !== 'url' || property !== 'status'){
-            return res.status(401).json({error: "unauthorized access is detected"});
+        console.log(req.body)
+        console.log(property)
+        if(property == 'company' || property == 'url' || property == 'status'){
+            continue;
+        } else {
+            return res.status(401).json({error: "missing required parameters"});
         }
     }
 
@@ -113,7 +98,6 @@ const dbChecker = (req, res, next) => {
 } /** end of dbChecker */
 
 module.exports = {
-    propChecker,
     intChecker,
     bodyChecker,
     dbChecker,
