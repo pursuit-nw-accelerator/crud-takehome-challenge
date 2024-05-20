@@ -48,10 +48,37 @@ applicationsController.post("/", async (request, response) => {
     }
 })
 
-// //PUT (update) an existing application
-// applicationsController.put()
+//PUT (update) an existing application
+applicationsController.put("/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+    const application = request.body;
+    const updatedApplication = await updateApplication(Number(id), application);
 
-// //DELETE an existing application
-// applicationsController.delete()
+    if(updatedApplication.id) {
+      response.status(200).json({ data: updatedApplication });
+    } else {
+      response.status(404).json({ error: "There is no application at that ID." });
+    }
+  } catch (error) {
+    response.status(500).json({ error: "Server failed to update application." });
+  }
+})
+
+//DELETE an existing application
+applicationsController.delete("/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+    const deletedApplication = await deleteApplication(Number(id));
+
+    if(deletedApplication) {
+      response.status(200).json({ data: deletedApplication });
+    } else {
+      response.status(404).json({ error: "There is no application at that ID." });
+    }
+  } catch (error) {
+    response.status(500).json({ error: "Server failed to delete application." });
+  }
+})
 
 module.exports = applicationsController;
