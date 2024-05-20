@@ -2,20 +2,14 @@
 
 ## How to start
 run 'npm -i' to install all required dependencies first.
-
 run 'npm run start' to run the server. (p.s for monitoring purpose, i recommand to use this script)
-
 you can type 'localhost:9000' in your browser to access the server locally.
 
 
 ##Routes
-
 home ('/') will check current status of the server.
-
 /applications will show all the apllication in the db.
-
 GET /applications/{id} will show specific application with {id}. {id} must be proper numeric value.
-
 POST /applications will post a new application to the database. The body in the request must have 'status' and 'company'.('url' is optional).
 
 
