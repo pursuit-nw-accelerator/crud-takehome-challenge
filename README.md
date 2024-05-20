@@ -1,4 +1,10 @@
-# CRUD back end takehome challenge
+# Self Job Application Tracking Backend
+
+## How to start
+run 'npm -i' to install all required dependencies first.
+run 'npm run start' to run the server. (p.s for monitoring purpose, i recommand to use this script)
+
+
 
 Imagine you are a software engineer applying for your first job. You are going to create a back end application so you can keep track of the jobs you apply for and their current status.
 
