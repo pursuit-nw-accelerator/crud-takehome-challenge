@@ -26,10 +26,10 @@ applicationsController.get('/', async (req, res) => {
 
 applicationsController.get('/:id', intChecker, async (req, res) => {
     try{
-        const application = getApplicationById(parseInt(req.params.id));
-
+        const application = await getApplicationById(parseInt(req.params.id));
+        console.log(application)
         if(application){
-            return res.status(201).json({data : application})
+            return res.status(201).json({data : application});
         } else {
             return res.status(400).json({error: `${id} does not exist in the database`})
         }
@@ -38,7 +38,7 @@ applicationsController.get('/:id', intChecker, async (req, res) => {
     }
 })
 
-applicationsController.post('/', propChecker, bodyChecker,async (req, res) => {
+applicationsController.post('/', propChecker, bodyChecker, async (req, res) => {
     try{
         const application = await createApplication(req.body);
 
@@ -79,10 +79,12 @@ applicationsController.delete('/:id', intChecker, async (req, res) => {
         return res.status(500).json({ error: err });
     }
 });
-applicationsController.get('*', async (req, res) => {
+applicationsController.get('*', (req, res) => {
     try{
         return res.status(404).json({error: ''})
     } catch(err){
         return res.status(500).json({ error: err });
     }
 });
+
+module.exports = applicationsController;

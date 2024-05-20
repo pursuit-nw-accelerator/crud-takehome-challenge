@@ -1,11 +1,12 @@
 const express = require('express');
 const applicationsController = require('./controllers/applicationControllers.js');
 const { dbChecker } = require('./middlewares/middlewares.js');
-
+const cors = require("cors");
 const app = express();
 
 // TODO: Add application-wide middleware
 app.use(cors());
+app.use(express.json())
 
 // TODO: Add controller(s)
 app.use('/applications', applicationsController);
