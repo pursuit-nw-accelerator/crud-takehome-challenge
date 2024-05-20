@@ -4,21 +4,6 @@
 run 'npm -i' to install all required dependencies first.
 run 'npm run start' to run the server. (p.s for monitoring purpose, i recommand to use this script)
 
-
-
-Imagine you are a software engineer applying for your first job. You are going to create a back end application so you can keep track of the jobs you apply for and their current status.
-
-You should use only your own code. Do not use ChatGPT or generative AI, and do not copy code from anyone else. If you look up how to do something, cite the URL in a comment next to the code you use.
-
-**I expect you to be able to explain clearly and correctly what every single line of code does in your submission.**
-
-## Getting started
-1. Fork this repo.
-1. Clone your fork to your machine.
-1. run `npm install` to install dependencies, and `npm start` to start the server.
-1. Write code to implement the [user stories](#user-stories) and [other requirements](#other-requirements) below.
-1. Commit and push your code as you go, ideally one commit per user story or requirement.
-
 ## Planning
 Before you start writing code, read the requirements carefully. Then create a table with 3 columns like the one below. For each requirement write down **how you'll test that it works correctly** and **how you'll build the feature**. The plan to build can be general but the steps to test it should be a **specific numbered list** of actions that a user can do (with Postman) and results they can see.
 
