@@ -3,6 +3,7 @@
 ## How to start
 run 'npm -i' to install all required dependencies first.
 run 'npm run start' to run the server. (p.s for monitoring purpose, i recommand to use this script)
+you can type 'localhost:9000' in your browser to access the server locally.
 
 ##Routes
 home ('/') will check current status of the server.
