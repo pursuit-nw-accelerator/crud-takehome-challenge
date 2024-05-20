@@ -2,6 +2,7 @@ const express = require('express');
 const applicationsController = require('./controllers/applicationControllers.js');
 const { dbChecker, crudChecker } = require('./middlewares/middlewares.js');
 const cors = require("cors");
+require('dotenv').config();
 const app = express();
 
 // TODO: Add application-wide middleware
