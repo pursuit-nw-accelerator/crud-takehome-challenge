@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { validateApplication, validateId } = require('./middleware/validation');
+const { validateApplication, validateId } = require('./middlewares/validations');
 const {
     getAll,
     getById,
