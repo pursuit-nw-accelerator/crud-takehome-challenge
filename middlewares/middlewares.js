@@ -1,14 +1,18 @@
-/*"id": 1,
-            "company": "Google",
-            "url": "https://cooljobs.com/google-swe",
-            "createdAt": "2024-01-01T00:00:00.000Z",
-            "status": "APPLIED",
-            "updatedAt":
-*/
 const fs = require('node:fs');
 const FILE = '../db/data/jobApplicationsData.json';
 const applicationStatuses = require('../constants.js');
 
+/**************************************
+ * propChecker()
+ * ===================================
+ * @param {Object} req - 
+ * @param {Object} res - 
+ * @param {function} next - 
+ * 
+ * a middleware to check the body block from a request.
+ * "company" and "status" must exist, and any other property besides "url" must be omitted.
+ * should b merged to bodyChecker()
+ */
 const propChecker = (req, res, next) => {
     if(!req.body["company"] || !req.body["status"]){
         return res.status(401).json({error:"missing parameters"});
@@ -17,6 +21,16 @@ const propChecker = (req, res, next) => {
     }
 }
 
+/**************************************
+ * intChecker()
+ * ===================================
+ * @param {Object} req - 
+ * @param {Object} res - 
+ * @param {function} next - 
+ * 
+ * a middleware to check a parameter in the url.
+ * the parameter must be numeric with positive integer.
+ */
 const intChecker = (req, res, next) => {
     if(!/^[0-9]*$/.test(req.params.id)){
         return res.status(401).json({error : "id must be a valid numeric" });
@@ -24,6 +38,16 @@ const intChecker = (req, res, next) => {
     next();
 }
 
+/**************************************
+ * bodyChecker()
+ * ===================================
+ * @param {Object} req - 
+ * @param {Object} res - 
+ * @param {function} next - 
+ * 
+ * a middleware to check the body block from a request.
+ * "company" and "status" must exist, and any other property besides "url" must be omitted.
+ */
 const bodyChecker = (req, res, next) => {
     if(!req.body){
         return res.status(401).json({error: "missing body"});
@@ -50,6 +74,17 @@ const bodyChecker = (req, res, next) => {
     next();
 }
 
+/**************************************
+ * dbChecker()
+ * ====================================
+ * @param {Object} req - 
+ * @param {Object} res - 
+ * @param {function} next - 
+ * 
+ * middleware to check the existence of the dbfile.
+ * reference: https://nodejs.org/docs/latest/api/fs.html#fsaccesspath-mode-callback
+ * 
+ */
 const dbChecker = (req, res, next) => {
     let errFlag = false;
     let errMsg = "";
