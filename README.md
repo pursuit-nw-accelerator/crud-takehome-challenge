@@ -18,8 +18,8 @@ Before you start writing code, read the requirements carefully. Then create a ta
 
 |Requirement|How to test|How to build|
 |----|----|----|
-|Health check route|1. Visit '/' in Postman.<br />2. I should see `{ "data": "Service is running" } <br/> 3. The status code should be 200 <br /> 4. The response should be in JSON.|// [your plan here](https://docs.google.com/document/d/1nrH0CSDP0nr0JNV0bC1OQcM_L38Y_rWmJ-7LFBkaBPY/edit?usp=sharing)|
-|See all applications|1. Visit '/applications' in Postman ...| // your plan here|
+|Health check route|1. Visit '/' in Postman.<br />2. I should see `{ "data": "Service is running" } <br/> 3. The status code should be 200 <br /> 4. The response should be in JSON.|// [Chk google doc](https://docs.google.com/document/d/1nrH0CSDP0nr0JNV0bC1OQcM_L38Y_rWmJ-7LFBkaBPY/edit?usp=sharing)|
+|See all applications|1. Visit '/applications' in Postman ...| // [Chk google doc](https://docs.google.com/document/d/1nrH0CSDP0nr0JNV0bC1OQcM_L38Y_rWmJ-7LFBkaBPY/edit?usp=sharing)|
 
 You can create your table in a google doc or google sheet. **You must include a link to the table in the README of your takehome.** If you do not do this, I will not give feedback on your work.
 
