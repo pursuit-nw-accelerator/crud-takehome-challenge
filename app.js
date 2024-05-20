@@ -9,6 +9,7 @@ const {
     remove
 } = require('./controllers/jobApplicationsController');
 
+
 // TODO: Add application-wide middleware
 app.use(cors());
 
