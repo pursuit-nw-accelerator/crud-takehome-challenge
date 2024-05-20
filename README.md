@@ -6,11 +6,20 @@
 1. you can type 'localhost:9000' in your browser to access the server locally.
 
 
-##Routes
+## Routes
 1. home ('/') will check current status of the server.
 1. /applications will show all the apllication in the db.
 1. GET /applications/{id} will show specific application with {id}. {id} must be proper numeric value.
 1. POST /applications will post a new application to the database. The body in the request must have 'status' and 'company'.('url' is optional).
+
+|Method|Route|Purpose|
+|----|----|----|
+|GET|/|Health checking the server|
+|GET|/applications|Retrieve all applications|
+|GET|/applications/{id}|Retrieve the specific application by {id}|
+|POST|/applications|Post an application. Must have both "status", and "company". "url" is optional|
+|PUT|/applications/{id}|Update the specific application by {id}|
+|DELETE|/applications/{id}|Delete the specific application by {id}|
 
 ## Planning
 Before you start writing code, read the requirements carefully. Then create a table with 3 columns like the one below. For each requirement write down **how you'll test that it works correctly** and **how you'll build the feature**. The plan to build can be general but the steps to test it should be a **specific numbered list** of actions that a user can do (with Postman) and results they can see.
