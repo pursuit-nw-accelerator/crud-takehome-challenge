@@ -6,6 +6,7 @@ const {
   updateApplication,
   deleteApplication,
 } = require("../queries/jobApplicationsQueries");
+const {validateApplication} = require("../validation/applicationValidation");
 
 const applicationsController = Router();
 
@@ -40,6 +41,12 @@ applicationsController.get("/:id", async (request, response) => {
 applicationsController.post("/", async (request, response) => {
     try {
         const application = request.body;
+        const { valid, error } = validateApplication(application);
+
+        if (!valid) {
+          return response.status(400).json({ error });
+        }
+
         const createdApplication = await createApplication(application);
 
         response.status(201).json({ data: createdApplication});
@@ -53,6 +60,12 @@ applicationsController.put("/:id", async (request, response) => {
   try {
     const { id } = request.params;
     const application = request.body;
+    const { valid, error } = validateApplication(application);
+
+    if (!valid) {
+      return response.status(400).json({ error });
+    }
+
     const updatedApplication = await updateApplication(Number(id), application);
 
     if(updatedApplication.id) {

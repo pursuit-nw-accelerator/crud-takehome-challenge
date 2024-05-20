@@ -44,7 +44,8 @@ Follow these steps to run the server locally:
          ```json
         {
         "company": "Company Name",
-        "status": "Application Status"
+        "status": "Application Status",
+        "url": "https://cooljobs.com/tesla-internship" //Optional field that does not need to be added and will be set to null as default
         }
         ```
     - Response: The newly created job application.
@@ -56,7 +57,7 @@ Follow these steps to run the server locally:
          ```json
         {
         "company": "Updated Company Name",
-        "status": "Updated Application Status"
+        "status": "Updated Application Status",
         }
         ```
     - Response: The updated job application.
